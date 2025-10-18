@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimal Gallery & Form</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="page__header">
+        <h1 class="page__title">Atelier</h1>
+        <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span class="toggle__icon" aria-hidden="true"></span>
+        </button>
+      </header>
+      <main class="page__main">
+        <nav class="tabs" aria-label="Primary">
+          <button class="tabs__button tabs__button--active" data-tab="gallery" type="button">
+            Gallery
+          </button>
+          <button class="tabs__button" data-tab="form" type="button">
+            Form
+          </button>
+        </nav>
+        <section class="panels">
+          <article class="panel panel--active" data-panel="gallery" aria-labelledby="gallery-tab">
+            <div class="panel__header">
+              <h2 id="gallery-tab">Curated Moments</h2>
+              <p>Explore a light, airy grid ready for your favorite visuals.</p>
+            </div>
+            <div class="gallery">
+              <div class="gallery__item">
+                <div class="gallery__thumb"></div>
+                <h3>Untitled Study</h3>
+                <p>Placeholder copy for a featured piece.</p>
+              </div>
+              <div class="gallery__item">
+                <div class="gallery__thumb"></div>
+                <h3>Soft Horizon</h3>
+                <p>Another spot awaiting final photography.</p>
+              </div>
+              <div class="gallery__item">
+                <div class="gallery__thumb"></div>
+                <h3>Monochrome Muse</h3>
+                <p>A frame that keeps the focus on composition.</p>
+              </div>
+              <div class="gallery__item">
+                <div class="gallery__thumb"></div>
+                <h3>Latitude</h3>
+                <p>Minimal placeholder imagery with subtle depth.</p>
+              </div>
+            </div>
+          </article>
+          <article class="panel" data-panel="form" aria-labelledby="form-tab" hidden>
+            <div class="panel__header">
+              <h2 id="form-tab">Project Brief</h2>
+              <p>
+                A clean canvas for future input fields—structured and ready when you are.
+              </p>
+            </div>
+            <form class="form" novalidate>
+              <fieldset class="form__section">
+                <legend>Contact</legend>
+                <div class="form__group">
+                  <label for="placeholder-name">Primary field</label>
+                  <input
+                    id="placeholder-name"
+                    name="placeholder-name"
+                    type="text"
+                    placeholder="Placeholder input"
+                  />
+                </div>
+                <div class="form__group">
+                  <label for="placeholder-email">Secondary field</label>
+                  <input
+                    id="placeholder-email"
+                    name="placeholder-email"
+                    type="email"
+                    placeholder="Secondary placeholder"
+                  />
+                </div>
+              </fieldset>
+              <fieldset class="form__section">
+                <legend>Details</legend>
+                <div class="form__group">
+                  <label for="placeholder-select">Option</label>
+                  <select id="placeholder-select" name="placeholder-select">
+                    <option value="">Select a placeholder</option>
+                    <option value="one">Choice one</option>
+                    <option value="two">Choice two</option>
+                    <option value="three">Choice three</option>
+                  </select>
+                </div>
+                <div class="form__group">
+                  <label for="placeholder-notes">Notes</label>
+                  <textarea
+                    id="placeholder-notes"
+                    name="placeholder-notes"
+                    rows="4"
+                    placeholder="Space reserved for rich context."
+                  ></textarea>
+                </div>
+              </fieldset>
+              <div class="form__footer">
+                <button class="button" type="submit" disabled>
+                  Submit (coming soon)
+                </button>
+              </div>
+            </form>
+          </article>
+        </section>
+      </main>
+      <footer class="page__footer">
+        <small>&copy; 2024 Atelier Studio</small>
+      </footer>
+    </div>
+    <script src="./script.js" defer></script>
+  </body>
+</html>
