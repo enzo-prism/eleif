@@ -530,7 +530,20 @@ body {
 .form-success__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
+}
+
+.form-success__actions > .button {
+  flex: 1 1 150px;
+  justify-content: center;
+}
+
+.form-success__actions > .button.button--ghost {
+  border-color: var(--border);
+}
+
+.form-success__actions > .button.button--ghost:hover {
+  border-color: var(--accent);
 }
 
 .form-success__feedback {
