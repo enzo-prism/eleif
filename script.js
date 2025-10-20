@@ -7,6 +7,10 @@ const galleryEmptyState = document.querySelector("[data-gallery-empty]");
 const modelForm = document.querySelector("[data-model-form]");
 const shareButton = document.querySelector("[data-share-form]");
 const shareFeedback = document.querySelector("[data-share-feedback]");
+const contactInput =
+  modelForm instanceof HTMLFormElement ? modelForm.querySelector("[data-contact-input]") : null;
+const replyToField =
+  modelForm instanceof HTMLFormElement ? modelForm.querySelector('input[name="_replyto"]') : null;
 const STORAGE_KEY = "atelier-theme";
 
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
@@ -268,6 +272,14 @@ if (modelForm) {
   if (redirectField) {
     const thankYouUrl = new URL("thank-you.html", window.location.href);
     redirectField.value = thankYouUrl.toString();
+  }
+
+  if (replyToField && contactInput) {
+    modelForm.addEventListener("submit", () => {
+      const rawValue = contactInput.value.trim();
+      const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(rawValue);
+      replyToField.value = looksLikeEmail ? rawValue : "";
+    });
   }
 }
 
