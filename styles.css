@@ -917,6 +917,18 @@ body.dialog-open {
 }
 
 .toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.toggle__track {
+  position: relative;
   width: 54px;
   height: 30px;
   border-radius: 999px;
@@ -925,9 +937,38 @@ body.dialog-open {
   display: inline-flex;
   align-items: center;
   padding: 4px;
-  cursor: pointer;
-  transition: background var(--transition-snappy), border-color var(--transition-snappy);
   box-shadow: var(--shadow);
+  transition: background var(--transition-snappy), border-color var(--transition-snappy), box-shadow var(--transition-snappy);
+}
+
+.toggle:focus-visible .toggle__track {
+  outline: none;
+  border-color: rgba(214, 79, 141, 0.5);
+  box-shadow:
+    0 0 0 3px var(--accent-soft),
+    var(--shadow);
+}
+
+.toggle__label {
+  font-size: 0.85rem;
+  line-height: 1;
+  opacity: 0.45;
+  transition: opacity var(--transition-snappy), color var(--transition-snappy), transform var(--transition-snappy);
+  pointer-events: none;
+}
+
+.toggle[data-state="light"] .toggle__label--light,
+[data-theme="light"] .toggle__label--light {
+  opacity: 1;
+  color: var(--foreground);
+  transform: translateY(-1px);
+}
+
+.toggle[data-state="dark"] .toggle__label--dark,
+[data-theme="dark"] .toggle__label--dark {
+  opacity: 1;
+  color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .toggle__icon {
@@ -955,7 +996,8 @@ body.dialog-open {
   background: linear-gradient(135deg, rgba(214, 79, 141, 0.35), rgba(214, 79, 141, 0.1));
 }
 
-[data-theme="dark"] .toggle__icon {
+[data-theme="dark"] .toggle__icon,
+.toggle[data-state="dark"] .toggle__icon {
   transform: translateX(24px);
   background: var(--accent);
 }
