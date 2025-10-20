@@ -39,6 +39,7 @@ body {
   font-family: var(--font-family);
   background: var(--background);
   color: var(--foreground);
+  text-transform: lowercase;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   display: flex;
@@ -65,7 +66,6 @@ body {
   margin: 0;
   font-size: clamp(28px, 4vw, 40px);
   letter-spacing: 0.08em;
-  text-transform: uppercase;
   font-weight: 600;
 }
 
@@ -238,7 +238,6 @@ body {
 
 .form__section legend {
   font-size: 0.95rem;
-  text-transform: uppercase;
   letter-spacing: 0.2em;
   color: var(--muted);
   padding: 0 12px;
