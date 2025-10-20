@@ -59,6 +59,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: clamp(18px, 3vw, 36px);
 }
 
 .page__footer {
@@ -98,6 +99,7 @@ body {
 .brand__copy {
   display: grid;
   gap: clamp(6px, 1vw, 12px);
+  max-width: 32ch;
 }
 
 
@@ -117,10 +119,6 @@ body {
   width: fit-content;
   text-decoration: none;
   transition: transform var(--transition-snappy), box-shadow var(--transition-snappy), border-color var(--transition-snappy);
-}
-
-.brand__copy .support-pill {
-  margin-top: clamp(6px, 1.2vw, 12px);
 }
 
 .support-pill:focus-visible,
@@ -810,6 +808,10 @@ body {
     align-items: flex-start;
   }
 
+  .page__header .support-pill {
+    margin-top: 4px;
+  }
+
   .panels {
     flex-direction: column;
   }
@@ -829,6 +831,10 @@ body {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
+  }
+
+  .page__header .support-pill {
+    margin-top: 10px;
   }
 
   .brand__logo {
