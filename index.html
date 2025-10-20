@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eleif | Weighted Hoodies for Wildlife Impact</title>
+    <title>eleif | weighted hoodies for wildlife impact</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -14,56 +14,71 @@
             <img
               class="brand__logo"
               src="./assets/gallery/Eleif%20Logo.webp"
-              alt="Eleif elephant logo"
+              alt="eleif elephant logo"
               width="128"
               height="128"
               loading="lazy"
             />
             <div class="brand__copy">
-              <h1 class="page__title">Eleif</h1>
-              <p class="page__tagline">Premium weighted hoodies funding care for orphaned baby elephants.</p>
+              <h1 class="page__title">eleif</h1>
+              <p class="page__tagline">premium weighted hoodies funding care for orphaned baby elephants.</p>
+              <div class="support-pill">
+                <img
+                  class="support-pill__logo"
+                  src="./assets/gallery/sheldrick%20wildlife%20trust%20logo.webp"
+                  alt="sheldrick wildlife trust logo"
+                  width="44"
+                  height="44"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="support-pill__text">supporting sheldrick wildlife trust</span>
+              </div>
             </div>
           </div>
         </div>
-        <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+        <button class="toggle" id="themeToggle" type="button" aria-label="toggle theme">
           <span class="toggle__icon" aria-hidden="true"></span>
         </button>
       </header>
       <main class="page__main">
-        <nav class="tabs" aria-label="Primary">
+        <nav class="tabs" aria-label="primary">
           <button class="tabs__button tabs__button--active" data-tab="gallery" type="button">
-            gallery
+            <span aria-hidden="true">🖼️</span>
+            <span class="tabs__label">gallery</span>
           </button>
           <button class="tabs__button" data-tab="model" type="button">
-            model application
+            <span aria-hidden="true">🧑‍🎤</span>
+            <span class="tabs__label">model application</span>
           </button>
           <button class="tabs__button" data-tab="order" type="button">
-            order
+            <span aria-hidden="true">🛍️</span>
+            <span class="tabs__label">order</span>
           </button>
         </nav>
         <section class="panels">
           <article class="panel panel--active" data-panel="gallery" aria-label="gallery">
             <div class="gallery" data-gallery aria-live="polite"></div>
             <p class="gallery__empty" data-gallery-empty hidden>
-              Place approved Eleif community photos in <code>assets/gallery/</code> and register them in the gallery manifest.
+              place approved eleif community photos in <code>assets/gallery/</code> and register them in the gallery manifest.
             </p>
           </article>
           <article class="panel" data-panel="model" aria-labelledby="model-tab" hidden>
             <div class="panel__header">
-              <h2 id="model-tab">Eleif model application</h2>
-              <p>Apply to rep the Eleif weighted hoodie, help us tell the story, and we’ll outfit you for your next shoot.</p>
+              <h2 id="model-tab">eleif model application</h2>
+              <p>apply to rep the eleif weighted hoodie, help us tell the story, and we’ll outfit you for your next shoot.</p>
             </div>
-            <section class="form-intro" aria-label="How the Eleif model application works">
-              <p class="form-intro__eyebrow">How it works</p>
+            <section class="form-intro" aria-label="how the eleif model application works">
+              <p class="form-intro__eyebrow">how it works</p>
               <ol class="form-steps">
                 <li class="form-steps__item">
-                  <span class="form-steps__step">Step 1</span> Apply via this form.
+                  <span class="form-steps__step">step 1</span> apply via this form.
                 </li>
                 <li class="form-steps__item">
-                  <span class="form-steps__step">Step 2</span> If you’re selected we’ll send you a free hoodie.
+                  <span class="form-steps__step">step 2</span> if you’re selected we’ll send you a free hoodie.
                 </li>
                 <li class="form-steps__item">
-                  <span class="form-steps__step">Step 3</span> Take pics in your hoodie and share them with us to feature in our marketing.
+                  <span class="form-steps__step">step 3</span> take pics in your hoodie and share them with us to feature in our marketing.
                 </li>
               </ol>
             </section>
@@ -71,73 +86,73 @@
               class="form"
               data-model-form
               action="https://formspree.io/f/xgvnbeyy"
-              method="POST"
+              method="post"
             >
               <input type="hidden" name="form-name" value="eleif model application" />
               <input type="hidden" name="_redirect" value="thank-you.html" />
-              <input type="hidden" name="_subject" value="New Eleif Model Application" />
+              <input type="hidden" name="_subject" value="new eleif model application" />
               <input type="hidden" name="_to" value="enzo@design-prism.com" />
               <input type="hidden" name="_replyto" value="" />
               <fieldset class="form__section form__section--choices">
-                <legend>Size</legend>
+                <legend><span aria-hidden="true">📏</span><span class="legend__label">size</span></legend>
                 <div class="choice-grid">
                   <label class="choice">
                     <input class="choice__input visually-hidden" type="radio" name="size" value="s" required />
-                    <span class="choice__label">S</span>
+                    <span class="choice__label">s</span>
                   </label>
                   <label class="choice">
                     <input class="choice__input visually-hidden" type="radio" name="size" value="m" required />
-                    <span class="choice__label">M</span>
+                    <span class="choice__label">m</span>
                   </label>
                   <label class="choice">
                     <input class="choice__input visually-hidden" type="radio" name="size" value="l" required />
-                    <span class="choice__label">L</span>
+                    <span class="choice__label">l</span>
                   </label>
                   <label class="choice">
                     <input class="choice__input visually-hidden" type="radio" name="size" value="xl" required />
-                    <span class="choice__label">XL</span>
+                    <span class="choice__label">xl</span>
                   </label>
                 </div>
               </fieldset>
               <fieldset class="form__section form__section--choices">
-                <legend>Color</legend>
+                <legend><span aria-hidden="true">🎨</span><span class="legend__label">color</span></legend>
                 <div class="choice-grid">
                   <label class="choice">
                     <input class="choice__input visually-hidden" type="radio" name="color" value="grey" required />
-                    <span class="choice__label">Grey</span>
+                    <span class="choice__label">grey</span>
                   </label>
                   <label class="choice">
                     <input class="choice__input visually-hidden" type="radio" name="color" value="black" required />
-                    <span class="choice__label">Black</span>
+                    <span class="choice__label">black</span>
                   </label>
                 </div>
               </fieldset>
               <fieldset class="form__section">
-                <legend>Shipping details</legend>
+                <legend><span aria-hidden="true">📦</span><span class="legend__label">shipping details</span></legend>
                 <div class="form__group">
-                  <label for="applicant-name">First and last name</label>
+                  <label for="applicant-name">first and last name</label>
                   <input
                     id="applicant-name"
                     name="applicant-name"
                     type="text"
                     autocomplete="name"
-                    placeholder="Your full name"
+                    placeholder="your full name"
                     required
                   />
                 </div>
                 <div class="form__group">
-                  <label for="applicant-address">Address</label>
+                  <label for="applicant-address">address</label>
                   <textarea
                     id="applicant-address"
                     name="applicant-address"
                     rows="3"
                     autocomplete="shipping street-address"
-                    placeholder="Where should we send your hoodie?"
+                    placeholder="where should we send your hoodie?"
                     required
                   ></textarea>
                 </div>
                 <div class="form__group">
-                  <label for="instagram-handle">Instagram link</label>
+                  <label for="instagram-handle">instagram link</label>
                   <input
                     id="instagram-handle"
                     name="instagram-handle"
@@ -148,14 +163,14 @@
                   />
                 </div>
                 <div class="form__group">
-                  <label for="contact-updates">Phone number or email <span class="form__optional">(optional)</span></label>
+                  <label for="contact-updates">phone number or email <span class="form__optional">(optional)</span></label>
                   <input
                     id="contact-updates"
                     name="contact-updates"
                     type="text"
                     inputmode="text"
                     autocomplete="email"
-                    placeholder="We’ll send your shipping updates here"
+                    placeholder="we’ll send your shipping updates here"
                     data-contact-input
                   />
                 </div>
@@ -163,41 +178,41 @@
               <p class="form__error" data-form-error hidden role="alert"></p>
               <div class="form__footer">
                 <button class="button button--primary" type="submit">
-                  Submit application
+                  submit application
                 </button>
               </div>
             </form>
           </article>
           <article class="panel" data-panel="order" aria-labelledby="order-tab" hidden>
             <div class="panel__header">
-              <h2 id="order-tab">Pre-order your Eleif hoodie</h2>
-              <p>Reserve the next drop for $199 — carbon-neutral shipping and elephant care support included.</p>
+              <h2 id="order-tab">pre-order your eleif hoodie</h2>
+              <p>reserve the next drop for $199 — carbon-neutral shipping and elephant care support included.</p>
             </div>
-            <section class="order-overview" aria-label="Eleif hoodie details">
+            <section class="order-overview" aria-label="eleif hoodie details">
               <div class="order-card order-card--price">
-                <span class="order-price__label">Price</span>
+                <span class="order-price__label">price</span>
                 <span class="order-price__value">$199</span>
-                <p class="order-price__note">Each purchase funds care for orphaned elephants and covers worldwide shipping.</p>
+                <p class="order-price__note">each purchase funds care for orphaned elephants and covers worldwide shipping.</p>
               </div>
               <div class="order-card">
-                <h3 class="order-card__heading">Available sizes</h3>
+                <h3 class="order-card__heading">available sizes</h3>
                 <ul class="order-list">
-                  <li>S · 34-36&quot; chest</li>
-                  <li>M · 38-40&quot; chest</li>
-                  <li>L · 42-44&quot; chest</li>
-                  <li>XL · 46-48&quot; chest</li>
+                  <li>s · 34-36&quot; chest</li>
+                  <li>m · 38-40&quot; chest</li>
+                  <li>l · 42-44&quot; chest</li>
+                  <li>xl · 46-48&quot; chest</li>
                 </ul>
               </div>
               <div class="order-card">
-                <h3 class="order-card__heading">Available colors</h3>
+                <h3 class="order-card__heading">available colors</h3>
                 <ul class="order-list order-list--swatches">
                   <li>
                     <span class="order-swatch order-swatch--grey" aria-hidden="true"></span>
-                    Storm grey
+                    storm grey
                   </li>
                   <li>
                     <span class="order-swatch order-swatch--black" aria-hidden="true"></span>
-                    Midnight black
+                    midnight black
                   </li>
                 </ul>
               </div>
@@ -206,28 +221,28 @@
               class="form order-form"
               data-order-form
               action="https://formspree.io/f/xkgqagnj"
-              method="POST"
+              method="post"
             >
               <input type="hidden" name="form-name" value="eleif hoodie order" />
               <input type="hidden" name="_redirect" value="thank-you-order.html" />
-              <input type="hidden" name="_subject" value="New Eleif Hoodie Order" />
+              <input type="hidden" name="_subject" value="new eleif hoodie order" />
               <input type="hidden" name="_to" value="enzo@design-prism.com" />
               <input type="hidden" name="_replyto" value="" />
               <fieldset class="form__section">
-                <legend>Contact</legend>
+                <legend><span aria-hidden="true">📇</span><span class="legend__label">contact</span></legend>
                 <div class="form__group">
-                  <label for="order-name">First and last name</label>
+                  <label for="order-name">first and last name</label>
                   <input
                     id="order-name"
                     name="order-name"
                     type="text"
                     autocomplete="name"
-                    placeholder="Your full name"
+                    placeholder="your full name"
                     required
                   />
                 </div>
                 <div class="form__group">
-                  <label for="order-email">Email</label>
+                  <label for="order-email">email</label>
                   <input
                     id="order-email"
                     name="order-email"
@@ -238,54 +253,54 @@
                   />
                 </div>
                 <div class="form__group">
-                  <label for="order-phone">Phone (optional)</label>
+                  <label for="order-phone">phone (optional)</label>
                   <input
                     id="order-phone"
                     name="order-phone"
                     type="tel"
                     autocomplete="tel"
-                    placeholder="We’ll text you shipping updates"
+                    placeholder="we’ll text you shipping updates"
                   />
                 </div>
               </fieldset>
               <fieldset class="form__section">
-                <legend>Shipping address</legend>
+                <legend><span aria-hidden="true">🗺️</span><span class="legend__label">shipping address</span></legend>
                 <div class="form__group">
-                  <label for="order-street">Street address</label>
+                  <label for="order-street">street address</label>
                   <input
                     id="order-street"
                     name="order-street"
                     type="text"
                     autocomplete="shipping street-address"
-                    placeholder="123 Elephant Way"
+                    placeholder="123 elephant way"
                     required
                   />
                 </div>
                 <div class="form__group form__group--inline">
                   <div>
-                    <label for="order-city">City</label>
+                    <label for="order-city">city</label>
                     <input
                       id="order-city"
                       name="order-city"
                       type="text"
                       autocomplete="shipping address-level2"
-                      placeholder="Nairobi"
+                      placeholder="nairobi"
                       required
                     />
                   </div>
                   <div>
-                    <label for="order-region">State / region</label>
+                    <label for="order-region">state / region</label>
                     <input
                       id="order-region"
                       name="order-region"
                       type="text"
                       autocomplete="shipping address-level1"
-                      placeholder="Region"
+                      placeholder="region"
                       required
                     />
                   </div>
                   <div>
-                    <label for="order-postal">Postal code</label>
+                    <label for="order-postal">postal code</label>
                     <input
                       id="order-postal"
                       name="order-postal"
@@ -297,56 +312,56 @@
                   </div>
                 </div>
                 <div class="form__group">
-                  <label for="order-country">Country</label>
+                  <label for="order-country">country</label>
                   <input
                     id="order-country"
                     name="order-country"
                     type="text"
                     autocomplete="shipping country"
-                    placeholder="Country"
+                    placeholder="country"
                     required
                   />
                 </div>
               </fieldset>
               <fieldset class="form__section form__section--choices">
-                <legend>Hoodie selection</legend>
+                <legend><span aria-hidden="true">🧥</span><span class="legend__label">hoodie selection</span></legend>
                 <div class="order-preferences">
                   <div class="order-preference">
-                    <span class="order-preference__label">Size</span>
+                    <span class="order-preference__label">size</span>
                     <div class="choice-grid choice-grid--compact">
                       <label class="choice">
                         <input class="choice__input visually-hidden" type="radio" name="order-size" value="s" required />
-                        <span class="choice__label">S</span>
+                        <span class="choice__label">s</span>
                       </label>
                       <label class="choice">
                         <input class="choice__input visually-hidden" type="radio" name="order-size" value="m" required />
-                        <span class="choice__label">M</span>
+                        <span class="choice__label">m</span>
                       </label>
                       <label class="choice">
                         <input class="choice__input visually-hidden" type="radio" name="order-size" value="l" required />
-                        <span class="choice__label">L</span>
+                        <span class="choice__label">l</span>
                       </label>
                       <label class="choice">
                         <input class="choice__input visually-hidden" type="radio" name="order-size" value="xl" required />
-                        <span class="choice__label">XL</span>
+                        <span class="choice__label">xl</span>
                       </label>
                     </div>
                   </div>
                   <div class="order-preference">
-                    <span class="order-preference__label">Color</span>
+                    <span class="order-preference__label">color</span>
                     <div class="choice-grid choice-grid--compact">
                       <label class="choice">
                         <input class="choice__input visually-hidden" type="radio" name="order-color" value="grey" required />
-                        <span class="choice__label">Grey</span>
+                        <span class="choice__label">grey</span>
                       </label>
                       <label class="choice">
                         <input class="choice__input visually-hidden" type="radio" name="order-color" value="black" required />
-                        <span class="choice__label">Black</span>
+                        <span class="choice__label">black</span>
                       </label>
                     </div>
                   </div>
                   <div class="order-preference">
-                    <label for="order-quantity" class="order-preference__label">Quantity</label>
+                    <label for="order-quantity" class="order-preference__label">quantity</label>
                     <input
                       id="order-quantity"
                       name="order-quantity"
@@ -364,14 +379,14 @@
                 <button class="button button--primary" type="submit">
                   place order request
                 </button>
-                <p class="order-form__note">We’ll confirm availability and send your checkout link promptly.</p>
+                <p class="order-form__note">we’ll confirm availability and send your checkout link promptly.</p>
               </div>
             </form>
           </article>
         </section>
       </main>
       <footer class="page__footer">
-        <small>&copy; 2024 Eleif Collective · Every hoodie sponsors elephant care.</small>
+        <small>&copy; 2024 eleif collective · every hoodie sponsors elephant care.</small>
       </footer>
     </div>
     <script src="./script.js" defer></script>
