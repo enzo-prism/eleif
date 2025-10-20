@@ -10,8 +10,20 @@
     <div class="page">
       <header class="page__header">
         <div>
-          <h1 class="page__title">Eleif</h1>
-          <p class="page__tagline">Premium weighted hoodies funding care for orphaned baby elephants.</p>
+          <div class="brand">
+            <img
+              class="brand__logo"
+              src="./assets/gallery/Eleif%20Logo.webp"
+              alt="Eleif elephant logo"
+              width="128"
+              height="128"
+              loading="lazy"
+            />
+            <div class="brand__copy">
+              <h1 class="page__title">Eleif</h1>
+              <p class="page__tagline">Premium weighted hoodies funding care for orphaned baby elephants.</p>
+            </div>
+          </div>
         </div>
         <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
           <span class="toggle__icon" aria-hidden="true"></span>
@@ -20,18 +32,14 @@
       <main class="page__main">
         <nav class="tabs" aria-label="Primary">
           <button class="tabs__button tabs__button--active" data-tab="gallery" type="button">
-            Gallery
+            gallery
           </button>
           <button class="tabs__button" data-tab="form" type="button">
-            Form
+            form
           </button>
         </nav>
         <section class="panels">
-          <article class="panel panel--active" data-panel="gallery" aria-labelledby="gallery-tab">
-            <div class="panel__header">
-              <h2 id="gallery-tab">Eleif Community</h2>
-              <p>See how our supporters style their weighted hoodies while nurturing Kenya's orphaned elephants.</p>
-            </div>
+          <article class="panel panel--active" data-panel="gallery" aria-label="gallery">
             <div class="gallery" data-gallery aria-live="polite"></div>
             <p class="gallery__empty" data-gallery-empty hidden>
               Place approved Eleif community photos in <code>assets/gallery/</code> and register them in the gallery manifest.
@@ -149,6 +157,7 @@
                   />
                 </div>
               </fieldset>
+              <p class="form__error" data-form-error hidden role="alert"></p>
               <div class="form__footer">
                 <button class="button button--primary" type="submit">
                   Submit application

@@ -11,6 +11,12 @@ const contactInput =
   modelForm instanceof HTMLFormElement ? modelForm.querySelector("[data-contact-input]") : null;
 const replyToField =
   modelForm instanceof HTMLFormElement ? modelForm.querySelector('input[name="_replyto"]') : null;
+const redirectField =
+  modelForm instanceof HTMLFormElement ? modelForm.querySelector('input[name="_redirect"]') : null;
+const formError =
+  modelForm instanceof HTMLFormElement ? modelForm.querySelector("[data-form-error]") : null;
+const submitButton =
+  modelForm instanceof HTMLFormElement ? modelForm.querySelector('button[type="submit"]') : null;
 const STORAGE_KEY = "atelier-theme";
 
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
@@ -268,19 +274,70 @@ const initialTab = knownTabIds.includes(initialHash) ? initialHash : defaultTab;
 activateTab(initialTab, { updateHash: false });
 
 if (modelForm) {
-  const redirectField = modelForm.querySelector('input[name="_redirect"]');
   if (redirectField) {
     const thankYouUrl = new URL("thank-you.html", window.location.href);
     redirectField.value = thankYouUrl.toString();
   }
 
-  if (replyToField && contactInput) {
-    modelForm.addEventListener("submit", () => {
+  modelForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (replyToField && contactInput) {
       const rawValue = contactInput.value.trim();
       const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(rawValue);
       replyToField.value = looksLikeEmail ? rawValue : "";
-    });
-  }
+    }
+
+    if (formError) {
+      formError.hidden = true;
+      formError.textContent = "";
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.dataset.loading = "true";
+    }
+
+    const formData = new FormData(modelForm);
+
+    try {
+      const response = await fetch(modelForm.action, {
+        method: modelForm.method || "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const targetUrl = redirectField?.value || new URL("thank-you.html", window.location.href).toString();
+        window.location.href = targetUrl;
+        return;
+      }
+
+      const payload = await response.json().catch(() => null);
+      const message =
+        payload?.errors?.[0]?.message ||
+        payload?.error ||
+        "something went wrong while submitting. please try again.";
+      if (formError) {
+        formError.textContent = message;
+        formError.hidden = false;
+      } else {
+        window.alert(message);
+      }
+    } catch (error) {
+      if (formError) {
+        formError.textContent = "we couldn’t reach the server. please check your connection and try again.";
+        formError.hidden = false;
+      } else {
+        window.alert("we couldn’t reach the server. please try again.");
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.dataset.loading = "false";
+      }
+    }
+  });
 }
 
 window.addEventListener("hashchange", () => {
