@@ -134,6 +134,7 @@ const applyTheme = (theme) => {
   root.setAttribute("data-theme", safeTheme);
   localStorage.setItem(STORAGE_KEY, safeTheme);
   themeToggle.setAttribute("aria-pressed", String(safeTheme === "dark"));
+  themeToggle.setAttribute("data-state", safeTheme === "dark" ? "dark" : "light");
 };
 
 const currentTheme =

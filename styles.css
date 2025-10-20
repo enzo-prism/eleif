@@ -790,7 +790,7 @@ body {
   cursor: pointer;
   transition: background var(--transition-snappy), border-color var(--transition-snappy);
   box-shadow: var(--shadow);
-	}
+}
 
 .toggle__icon {
   width: 22px;
@@ -799,11 +799,35 @@ body {
   background: var(--foreground);
   transform: translateX(0);
   transition: transform var(--transition-snappy), background var(--transition-snappy);
+  position: relative;
+}
+
+.toggle__icon::before,
+.toggle__icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.55));
+  opacity: 0;
+  transition: opacity var(--transition-snappy);
+}
+
+.toggle__icon::after {
+  background: linear-gradient(135deg, rgba(214, 79, 141, 0.35), rgba(214, 79, 141, 0.1));
 }
 
 [data-theme="dark"] .toggle__icon {
   transform: translateX(24px);
   background: var(--accent);
+}
+
+.toggle[data-state="light"] .toggle__icon::before {
+  opacity: 1;
+}
+
+.toggle[data-state="dark"] .toggle__icon::after {
+  opacity: 1;
 }
 
 @media (max-width: 800px) {
