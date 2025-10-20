@@ -86,6 +86,7 @@ body {
   gap: 6px;
 }
 
+
 .support-pill {
   display: inline-flex;
   align-items: center;
@@ -100,6 +101,20 @@ body {
   letter-spacing: 0.08em;
   text-transform: lowercase;
   width: fit-content;
+  text-decoration: none;
+  transition: transform var(--transition-snappy), box-shadow var(--transition-snappy), border-color var(--transition-snappy);
+}
+
+.support-pill:focus-visible,
+.support-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px -18px rgba(32, 37, 31, 0.6);
+  border-color: rgba(214, 79, 141, 0.3);
+}
+
+.support-pill:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 16px 30px -18px rgba(32, 37, 31, 0.6);
 }
 
 [data-theme="dark"] .support-pill {
@@ -107,6 +122,11 @@ body {
   color: var(--foreground);
   border-color: rgba(255, 255, 255, 0.18);
   box-shadow: 0 12px 26px -20px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .support-pill:hover,
+[data-theme="dark"] .support-pill:focus-visible {
+  border-color: rgba(214, 79, 141, 0.45);
 }
 
 .support-pill__logo {
