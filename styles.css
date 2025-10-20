@@ -456,8 +456,7 @@ body.dialog-open {
   color: var(--foreground);
   font-size: clamp(0.75rem, 1.6vw, 0.85rem);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.12em;
   transition: border-color var(--transition-snappy), background var(--transition-snappy),
     box-shadow var(--transition-snappy), transform var(--transition-snappy), color var(--transition-snappy);
 }
