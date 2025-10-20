@@ -5,7 +5,6 @@ const panels = Array.from(document.querySelectorAll(".panel"));
 const galleryRoot = document.querySelector("[data-gallery]");
 const galleryEmptyState = document.querySelector("[data-gallery-empty]");
 const modelForm = document.querySelector("[data-model-form]");
-const formSuccess = document.querySelector("[data-form-success]");
 const shareButton = document.querySelector("[data-share-form]");
 const shareFeedback = document.querySelector("[data-share-feedback]");
 const STORAGE_KEY = "atelier-theme";
@@ -264,27 +263,20 @@ const initialTab = knownTabIds.includes(initialHash) ? initialHash : defaultTab;
 
 activateTab(initialTab, { updateHash: false });
 
+if (modelForm) {
+  const redirectField = modelForm.querySelector('input[name="_redirect"]');
+  if (redirectField) {
+    const thankYouUrl = new URL("thank-you.html", window.location.href);
+    redirectField.value = thankYouUrl.toString();
+  }
+}
+
 window.addEventListener("hashchange", () => {
   const hash = window.location.hash.slice(1);
   if (knownTabIds.includes(hash)) {
     activateTab(hash, { updateHash: false });
   }
 });
-
-if (modelForm && formSuccess) {
-  modelForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    modelForm.reset();
-    modelForm.setAttribute("hidden", "");
-    formSuccess.hidden = false;
-    if (shareFeedback) {
-      shareFeedback.hidden = true;
-      shareFeedback.textContent = "";
-    }
-
-    formSuccess.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
-}
 
 let shareFeedbackTimeoutId;
 
@@ -307,7 +299,7 @@ const setShareFeedback = (message) => {
 
 if (shareButton) {
   shareButton.addEventListener("click", async () => {
-    const shareUrl = `${window.location.origin}${window.location.pathname}#form`;
+    const shareUrl = new URL("index.html#form", window.location.href).toString();
     const shareData = {
       title: "Eleif Model Application",
       text: "Apply to join the Eleif model community and receive your weighted hoodie.",

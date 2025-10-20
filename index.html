@@ -56,7 +56,14 @@
                 </li>
               </ol>
             </section>
-            <form class="form" data-model-form>
+            <form
+              class="form"
+              data-model-form
+              action="https://formspree.io/f/xgvnbeyy"
+              method="POST"
+            >
+              <input type="hidden" name="form-name" value="eleif model application" />
+              <input type="hidden" name="_redirect" value="thank-you.html" />
               <fieldset class="form__section form__section--choices">
                 <legend>Size</legend>
                 <div class="choice-grid">
@@ -132,6 +139,7 @@
                     id="contact-updates"
                     name="contact-updates"
                     type="text"
+                    inputmode="text"
                     autocomplete="email"
                     placeholder="We’ll send your shipping updates here"
                   />
@@ -143,24 +151,6 @@
                 </button>
               </div>
             </form>
-            <div class="form-success" data-form-success hidden aria-live="polite">
-              <h3 class="form-success__title">Application success</h3>
-              <p class="form-success__subtitle">If you shared your email or phone number, we’ll be texting you shipping updates.</p>
-              <div class="form-success__actions">
-                <button class="button button--primary" type="button" data-share-form>
-                  Know someone who’s interested in modeling? Share the form
-                </button>
-                <a
-                  class="button button--ghost"
-                  href="https://instagram.com/eleif"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Follow us on Instagram
-                </a>
-              </div>
-              <p class="form-success__feedback" data-share-feedback hidden></p>
-            </div>
           </article>
         </section>
       </main>
