@@ -172,6 +172,23 @@ body {
   gap: clamp(20px, 3vw, 28px);
 }
 
+.gallery__empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.gallery__empty code {
+  font-family: ui-monospace, "SFMono-Regular", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-style: normal;
+  background: var(--surface-alt);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
 .gallery__item {
   position: relative;
   overflow: hidden;
