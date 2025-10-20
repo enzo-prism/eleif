@@ -1,14 +1,15 @@
 :root {
   color-scheme: light dark;
   --font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --background: #f6f7f8;
-  --foreground: #15171a;
-  --surface: rgba(255, 255, 255, 0.7);
-  --surface-alt: rgba(255, 255, 255, 0.45);
-  --border: rgba(0, 0, 0, 0.08);
-  --accent: #2d7ff9;
-  --muted: #5d636f;
-  --shadow: 0 20px 35px -25px rgba(15, 20, 30, 0.35);
+  --background: #f2f1ed;
+  --foreground: #1e1a16;
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-alt: rgba(255, 255, 255, 0.6);
+  --border: rgba(40, 43, 40, 0.12);
+  --accent: #2f6f5e;
+  --accent-soft: rgba(47, 111, 94, 0.14);
+  --muted: #6a645a;
+  --shadow: 0 24px 40px -28px rgba(36, 41, 34, 0.48);
   --radius-lg: 22px;
   --radius-md: 16px;
   --radius-sm: 10px;
@@ -16,14 +17,15 @@
 }
 
 [data-theme="dark"] {
-  --background: #0f1115;
-  --foreground: #e7e9ee;
-  --surface: rgba(22, 26, 33, 0.9);
-  --surface-alt: rgba(19, 22, 28, 0.75);
-  --border: rgba(231, 233, 238, 0.08);
-  --accent: #7ba5ff;
-  --muted: #a4aab8;
-  --shadow: 0 18px 48px -30px rgba(0, 0, 0, 0.8);
+  --background: #0f1614;
+  --foreground: #e5e7df;
+  --surface: rgba(19, 25, 23, 0.82);
+  --surface-alt: rgba(19, 26, 24, 0.68);
+  --border: rgba(229, 233, 225, 0.12);
+  --accent: #7fbf9a;
+  --accent-soft: rgba(127, 191, 154, 0.18);
+  --muted: #b8beb1;
+  --shadow: 0 20px 44px -28px rgba(0, 0, 0, 0.72);
 }
 
 *,
@@ -67,6 +69,14 @@ body {
   font-weight: 600;
 }
 
+.page__tagline {
+  margin: 6px 0 0;
+  color: var(--muted);
+  max-width: 32ch;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
 .page__main {
   display: flex;
   flex-direction: column;
@@ -104,12 +114,13 @@ body {
   color: var(--foreground);
   background: var(--surface);
   outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .tabs__button--active {
   color: var(--foreground);
   background: var(--surface);
-  box-shadow: inset 0 0 0 1px var(--border), 0 10px 20px -18px rgba(15, 20, 30, 0.5);
+  box-shadow: inset 0 0 0 1px var(--border), 0 12px 24px -20px rgba(32, 37, 31, 0.45);
   transform: translateY(-1px);
 }
 
@@ -162,49 +173,37 @@ body {
 }
 
 .gallery__item {
-  background: var(--surface-alt);
+  position: relative;
+  overflow: hidden;
   border-radius: var(--radius-md);
-  padding: 20px;
   border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-height: 220px;
+  min-height: 260px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(47, 111, 94, 0.16), rgba(47, 111, 94, 0.02));
+  box-shadow: 0 12px 24px -20px rgba(32, 37, 31, 0.4);
   transition: transform var(--transition-snappy), box-shadow var(--transition-snappy);
+}
+
+.gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+  filter: saturate(1.05) contrast(1.05);
+  transition: transform var(--transition-snappy), filter var(--transition-snappy);
 }
 
 .gallery__item:hover,
 .gallery__item:focus-within {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px -20px rgba(15, 20, 30, 0.55);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px -24px rgba(28, 32, 27, 0.52);
 }
 
-.gallery__thumb {
-  width: 100%;
-  padding-bottom: 65%;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, rgba(45, 127, 249, 0.4), rgba(45, 127, 249, 0));
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-}
-
-.gallery__thumb::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top left, rgba(45, 127, 249, 0.32), transparent 55%);
-}
-
-.gallery__item h3 {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 500;
-}
-
-.gallery__item p {
-  margin: 0;
-  color: var(--muted);
+.gallery__item:hover img,
+.gallery__item:focus-within img {
+  transform: scale(1.03);
+  filter: saturate(1.15) contrast(1.1);
 }
 
 .form {
@@ -246,7 +245,7 @@ body {
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--foreground);
   font-size: 1rem;
   transition: border-color var(--transition-snappy), box-shadow var(--transition-snappy);
@@ -257,7 +256,7 @@ body {
 .form__group textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(45, 127, 249, 0.2);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .form__group select {
@@ -281,7 +280,7 @@ body {
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  background: linear-gradient(135deg, rgba(45, 127, 249, 0.85), rgba(45, 127, 249, 0.6));
+  background: linear-gradient(135deg, rgba(47, 111, 94, 0.85), rgba(47, 111, 94, 0.65));
   color: #fff;
   opacity: 0.45;
   cursor: not-allowed;

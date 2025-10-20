@@ -3,13 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Minimal Gallery & Form</title>
+    <title>Eleif | Weighted Hoodies for Wildlife Impact</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="page">
       <header class="page__header">
-        <h1 class="page__title">Atelier</h1>
+        <div>
+          <h1 class="page__title">Eleif</h1>
+          <p class="page__tagline">Premium weighted hoodies funding care for orphaned baby elephants.</p>
+        </div>
         <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
           <span class="toggle__icon" aria-hidden="true"></span>
         </button>
@@ -26,85 +29,88 @@
         <section class="panels">
           <article class="panel panel--active" data-panel="gallery" aria-labelledby="gallery-tab">
             <div class="panel__header">
-              <h2 id="gallery-tab">Curated Moments</h2>
-              <p>Explore a light, airy grid ready for your favorite visuals.</p>
+              <h2 id="gallery-tab">Eleif Community</h2>
+              <p>See how our supporters style their weighted hoodies while nurturing Kenya's orphaned elephants.</p>
             </div>
             <div class="gallery">
-              <div class="gallery__item">
-                <div class="gallery__thumb"></div>
-                <h3>Untitled Study</h3>
-                <p>Placeholder copy for a featured piece.</p>
-              </div>
-              <div class="gallery__item">
-                <div class="gallery__thumb"></div>
-                <h3>Soft Horizon</h3>
-                <p>Another spot awaiting final photography.</p>
-              </div>
-              <div class="gallery__item">
-                <div class="gallery__thumb"></div>
-                <h3>Monochrome Muse</h3>
-                <p>A frame that keeps the focus on composition.</p>
-              </div>
-              <div class="gallery__item">
-                <div class="gallery__thumb"></div>
-                <h3>Latitude</h3>
-                <p>Minimal placeholder imagery with subtle depth.</p>
-              </div>
+              <figure class="gallery__item">
+                <img
+                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80"
+                  alt="Eleif community member wearing a weighted hoodie in natural light."
+                />
+              </figure>
+              <figure class="gallery__item">
+                <img
+                  src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80"
+                  alt="Supporter styling an Eleif hoodie during morning coffee."
+                />
+              </figure>
+              <figure class="gallery__item">
+                <img
+                  src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80"
+                  alt="Outdoor portrait of a community member in a weighted hoodie."
+                />
+              </figure>
+              <figure class="gallery__item">
+                <img
+                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+                  alt="Close-up of Eleif hoodie details worn by a supporter."
+                />
+              </figure>
             </div>
           </article>
           <article class="panel" data-panel="form" aria-labelledby="form-tab" hidden>
             <div class="panel__header">
-              <h2 id="form-tab">Project Brief</h2>
-              <p>
-                A clean canvas for future input fields—structured and ready when you are.
-              </p>
+              <h2 id="form-tab">Partner with Eleif</h2>
+              <p>Share your story or collaboration idea so we can expand the impact for Kenya's baby elephants.</p>
             </div>
             <form class="form" novalidate>
               <fieldset class="form__section">
                 <legend>Contact</legend>
                 <div class="form__group">
-                  <label for="placeholder-name">Primary field</label>
+                  <label for="contact-name">Name</label>
                   <input
-                    id="placeholder-name"
-                    name="placeholder-name"
+                    id="contact-name"
+                    name="contact-name"
                     type="text"
-                    placeholder="Placeholder input"
+                    placeholder="Your full name"
                   />
                 </div>
                 <div class="form__group">
-                  <label for="placeholder-email">Secondary field</label>
+                  <label for="contact-email">Email</label>
                   <input
-                    id="placeholder-email"
-                    name="placeholder-email"
+                    id="contact-email"
+                    name="contact-email"
                     type="email"
-                    placeholder="Secondary placeholder"
+                    placeholder="you@example.com"
                   />
                 </div>
               </fieldset>
               <fieldset class="form__section">
                 <legend>Details</legend>
                 <div class="form__group">
-                  <label for="placeholder-select">Option</label>
-                  <select id="placeholder-select" name="placeholder-select">
-                    <option value="">Select a placeholder</option>
-                    <option value="one">Choice one</option>
-                    <option value="two">Choice two</option>
-                    <option value="three">Choice three</option>
+                  <label for="interest-select">Interest</label>
+                  <select id="interest-select" name="interest-select">
+                    <option value="">Select an interest</option>
+                    <option value="impact-updates">Impact and rescue updates</option>
+                    <option value="bulk-orders">Bulk or corporate gifting</option>
+                    <option value="content-collab">Content collaboration</option>
+                    <option value="press">Press inquiries</option>
                   </select>
                 </div>
                 <div class="form__group">
-                  <label for="placeholder-notes">Notes</label>
+                  <label for="project-notes">Message</label>
                   <textarea
-                    id="placeholder-notes"
-                    name="placeholder-notes"
+                    id="project-notes"
+                    name="project-notes"
                     rows="4"
-                    placeholder="Space reserved for rich context."
+                    placeholder="Tell us how you'd like to partner with Eleif."
                   ></textarea>
                 </div>
               </fieldset>
               <div class="form__footer">
                 <button class="button" type="submit" disabled>
-                  Submit (coming soon)
+                  Join the mission (coming soon)
                 </button>
               </div>
             </form>
@@ -112,7 +118,7 @@
         </section>
       </main>
       <footer class="page__footer">
-        <small>&copy; 2024 Atelier Studio</small>
+        <small>&copy; 2024 Eleif Collective · Every hoodie sponsors elephant care.</small>
       </footer>
     </div>
     <script src="./script.js" defer></script>
