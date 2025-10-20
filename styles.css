@@ -780,3 +780,72 @@ body {
     min-height: auto;
   }
 }
+
+@media (max-width: 640px) {
+  .page {
+    padding: 20px 18px;
+    gap: 20px;
+  }
+
+  .brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .brand__logo {
+    width: clamp(48px, 16vw, 76px);
+  }
+
+  .support-pill {
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 0.72rem;
+  }
+
+  .support-pill__logo {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+  }
+
+  .tabs {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .tabs__button {
+    flex: 1 1 33%;
+    justify-content: center;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .tabs__button span[aria-hidden="true"] {
+    font-size: 1rem;
+  }
+
+  .panel {
+    padding: clamp(18px, 6vw, 26px);
+    gap: 22px;
+  }
+
+  .form__section {
+    padding: 18px;
+    gap: 20px;
+  }
+
+  .form-intro {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .order-overview {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .order-form__footer {
+    justify-items: stretch;
+  }
+}
