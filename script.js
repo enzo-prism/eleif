@@ -7,6 +7,9 @@ const galleryEmptyState = document.querySelector("[data-gallery-empty]");
 const modelForm = document.querySelector("[data-model-form]");
 const shareButton = document.querySelector("[data-share-form]");
 const shareFeedback = document.querySelector("[data-share-feedback]");
+const howItWorksTrigger = document.querySelector("[data-how-it-works-trigger]");
+const howItWorksDialog = document.querySelector("[data-how-it-works-dialog]");
+const howItWorksCloseButtons = Array.from(document.querySelectorAll("[data-how-it-works-close]"));
 const contactInput =
   modelForm instanceof HTMLFormElement ? modelForm.querySelector("[data-contact-input]") : null;
 const replyToField =
@@ -126,6 +129,233 @@ const setupFormSubmission = ({
     }
   });
 };
+
+const canUseNativeHowItWorksDialog =
+  howItWorksDialog instanceof HTMLDialogElement &&
+  typeof howItWorksDialog.showModal === "function" &&
+  typeof howItWorksDialog.close === "function";
+
+let howItWorksOverlay = null;
+let howItWorksLastFocus = null;
+let releaseFallbackFocusTrap = null;
+
+const focusableDialogSelector =
+  'button:not([disabled]), [href], input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+if (!canUseNativeHowItWorksDialog && howItWorksDialog instanceof HTMLElement) {
+  howItWorksDialog.setAttribute("role", "dialog");
+  howItWorksDialog.setAttribute("aria-modal", "true");
+  howItWorksDialog.setAttribute("tabindex", "-1");
+  howItWorksDialog.setAttribute("aria-hidden", "true");
+  howItWorksDialog.hidden = true;
+
+  const existingOverlay = document.querySelector(".dialog-overlay");
+  if (existingOverlay instanceof HTMLElement) {
+    howItWorksOverlay = existingOverlay;
+  } else {
+    const fallbackOverlay = document.createElement("div");
+    fallbackOverlay.className = "dialog-overlay";
+    document.body.appendChild(fallbackOverlay);
+    howItWorksOverlay = fallbackOverlay;
+  }
+}
+
+const setHowItWorksExpanded = (expanded) => {
+  if (howItWorksTrigger) {
+    howItWorksTrigger.setAttribute("aria-expanded", String(Boolean(expanded)));
+  }
+};
+
+const isHowItWorksOpen = () => {
+  if (!(howItWorksDialog instanceof HTMLElement)) {
+    return false;
+  }
+
+  if (canUseNativeHowItWorksDialog) {
+    return howItWorksDialog.open;
+  }
+
+  return howItWorksDialog.dataset.state === "open";
+};
+
+const activateFallbackFocusTrap = () => {
+  if (!(howItWorksDialog instanceof HTMLElement)) {
+    return;
+  }
+
+  const focusable = Array.from(
+    howItWorksDialog.querySelectorAll(focusableDialogSelector)
+  ).filter((element) => element instanceof HTMLElement && element.tabIndex !== -1);
+
+  const fallbackTarget = (focusable[0] || howItWorksDialog);
+
+  const handleFocus = (event) => {
+    if (!howItWorksDialog.contains(event.target)) {
+      fallbackTarget.focus({ preventScroll: true });
+      event.stopPropagation();
+    }
+  };
+
+  const handleKeydown = (event) => {
+    if (event.key !== "Tab") {
+      return;
+    }
+
+    if (!focusable.length) {
+      event.preventDefault();
+      fallbackTarget.focus({ preventScroll: true });
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      (last || fallbackTarget).focus({ preventScroll: true });
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      (first || fallbackTarget).focus({ preventScroll: true });
+    }
+  };
+
+  document.addEventListener("focus", handleFocus, true);
+  howItWorksDialog.addEventListener("keydown", handleKeydown);
+
+  releaseFallbackFocusTrap = () => {
+    document.removeEventListener("focus", handleFocus, true);
+    howItWorksDialog.removeEventListener("keydown", handleKeydown);
+    releaseFallbackFocusTrap = null;
+  };
+};
+
+const finalizeHowItWorksClose = () => {
+  if (document.body) {
+    document.body.classList.remove("dialog-open");
+  }
+
+  if (howItWorksOverlay) {
+    howItWorksOverlay.dataset.visible = "false";
+  }
+
+  setHowItWorksExpanded(false);
+
+  if (typeof releaseFallbackFocusTrap === "function") {
+    releaseFallbackFocusTrap();
+  }
+
+  if (howItWorksLastFocus instanceof HTMLElement) {
+    howItWorksLastFocus.focus({ preventScroll: true });
+  }
+
+  howItWorksLastFocus = null;
+
+  if (!canUseNativeHowItWorksDialog && howItWorksDialog instanceof HTMLElement) {
+    howItWorksDialog.setAttribute("aria-hidden", "true");
+  }
+};
+
+const openHowItWorksDialog = () => {
+  if (!(howItWorksDialog instanceof HTMLElement) || isHowItWorksOpen()) {
+    return;
+  }
+
+  howItWorksLastFocus =
+    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+  if (document.body) {
+    document.body.classList.add("dialog-open");
+  }
+
+  setHowItWorksExpanded(true);
+
+  if (howItWorksOverlay) {
+    howItWorksOverlay.dataset.visible = "true";
+  }
+
+  if (canUseNativeHowItWorksDialog) {
+    howItWorksDialog.showModal();
+    return;
+  }
+
+  howItWorksDialog.hidden = false;
+  howItWorksDialog.removeAttribute("aria-hidden");
+  howItWorksDialog.setAttribute("open", "");
+  howItWorksDialog.dataset.state = "open";
+
+  activateFallbackFocusTrap();
+
+  const focusTarget = howItWorksDialog.querySelector(focusableDialogSelector);
+
+  if (focusTarget instanceof HTMLElement) {
+    focusTarget.focus({ preventScroll: true });
+  } else {
+    howItWorksDialog.focus({ preventScroll: true });
+  }
+};
+
+const closeHowItWorksDialog = () => {
+  if (!(howItWorksDialog instanceof HTMLElement) || !isHowItWorksOpen()) {
+    return;
+  }
+
+  if (canUseNativeHowItWorksDialog) {
+    howItWorksDialog.close();
+    return;
+  }
+
+  howItWorksDialog.dataset.state = "closed";
+  howItWorksDialog.removeAttribute("open");
+  howItWorksDialog.hidden = true;
+  howItWorksDialog.setAttribute("aria-hidden", "true");
+
+  finalizeHowItWorksClose();
+};
+
+const handleFallbackKeydown = (event) => {
+  if (event.key === "Escape" && !event.defaultPrevented && isHowItWorksOpen()) {
+    event.preventDefault();
+    closeHowItWorksDialog();
+  }
+};
+
+if (howItWorksTrigger && howItWorksDialog) {
+  howItWorksTrigger.addEventListener("click", () => {
+    openHowItWorksDialog();
+  });
+}
+
+howItWorksCloseButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    closeHowItWorksDialog();
+  });
+});
+
+if (howItWorksDialog instanceof HTMLElement) {
+  howItWorksDialog.addEventListener("click", (event) => {
+    if (event.target === howItWorksDialog) {
+      closeHowItWorksDialog();
+    }
+  });
+}
+
+if (canUseNativeHowItWorksDialog && howItWorksDialog) {
+  howItWorksDialog.addEventListener("close", () => {
+    finalizeHowItWorksClose();
+  });
+
+  howItWorksDialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeHowItWorksDialog();
+  });
+} else if (howItWorksDialog instanceof HTMLElement) {
+  window.addEventListener("keydown", handleFallbackKeydown, true);
+  if (howItWorksOverlay) {
+    howItWorksOverlay.addEventListener("click", () => {
+      closeHowItWorksDialog();
+    });
+  }
+}
 
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 

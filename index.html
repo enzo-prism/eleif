@@ -85,20 +85,44 @@
               <h2 id="model-tab">eleif model application</h2>
               <p>apply to rep the eleif weighted hoodie, help us tell the story, and we’ll outfit you for your next shoot.</p>
             </div>
-            <section class="form-intro" aria-label="how the eleif model application works">
-              <p class="form-intro__eyebrow">how it works</p>
-              <ol class="form-steps">
-                <li class="form-steps__item">
-                  <span class="form-steps__step">step 1</span> apply via this form.
-                </li>
-                <li class="form-steps__item">
-                  <span class="form-steps__step">step 2</span> if you’re selected we’ll send you a free hoodie.
-                </li>
-                <li class="form-steps__item">
-                  <span class="form-steps__step">step 3</span> take pics in your hoodie and share them with us to feature in our marketing.
-                </li>
-              </ol>
-            </section>
+            <div class="form-intro-trigger">
+              <button
+                class="form-intro-trigger__pill"
+                type="button"
+                data-how-it-works-trigger
+                aria-haspopup="dialog"
+                aria-expanded="false"
+              >
+                <span class="form-intro-trigger__icon" aria-hidden="true">ⓘ</span>
+                <span class="form-intro-trigger__label">how it works</span>
+              </button>
+            </div>
+            <dialog class="how-it-works-dialog" data-how-it-works-dialog aria-labelledby="how-it-works-title">
+              <div class="how-it-works-dialog__content" role="document">
+                <header class="how-it-works-dialog__header">
+                  <p class="form-intro__eyebrow" id="how-it-works-title">how it works</p>
+                  <button
+                    class="how-it-works-dialog__close"
+                    type="button"
+                    data-how-it-works-close
+                    aria-label="close how it works details"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </header>
+                <ol class="form-steps">
+                  <li class="form-steps__item">
+                    <span class="form-steps__step">step 1</span> apply via this form.
+                  </li>
+                  <li class="form-steps__item">
+                    <span class="form-steps__step">step 2</span> if you’re selected we’ll send you a free hoodie.
+                  </li>
+                  <li class="form-steps__item">
+                    <span class="form-steps__step">step 3</span> take pics in your hoodie and share them with us to feature in our marketing.
+                  </li>
+                </ol>
+              </div>
+            </dialog>
             <form
               class="form"
               data-model-form
