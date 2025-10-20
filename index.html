@@ -34,8 +34,11 @@
           <button class="tabs__button tabs__button--active" data-tab="gallery" type="button">
             gallery
           </button>
-          <button class="tabs__button" data-tab="form" type="button">
-            form
+          <button class="tabs__button" data-tab="model" type="button">
+            model application
+          </button>
+          <button class="tabs__button" data-tab="order" type="button">
+            order
           </button>
         </nav>
         <section class="panels">
@@ -45,9 +48,9 @@
               Place approved Eleif community photos in <code>assets/gallery/</code> and register them in the gallery manifest.
             </p>
           </article>
-          <article class="panel" data-panel="form" aria-labelledby="form-tab" hidden>
+          <article class="panel" data-panel="model" aria-labelledby="model-tab" hidden>
             <div class="panel__header">
-              <h2 id="form-tab">Eleif model application</h2>
+              <h2 id="model-tab">Eleif model application</h2>
               <p>Apply to rep the Eleif weighted hoodie, help us tell the story, and we’ll outfit you for your next shoot.</p>
             </div>
             <section class="form-intro" aria-label="How the Eleif model application works">
@@ -162,6 +165,206 @@
                 <button class="button button--primary" type="submit">
                   Submit application
                 </button>
+              </div>
+            </form>
+          </article>
+          <article class="panel" data-panel="order" aria-labelledby="order-tab" hidden>
+            <div class="panel__header">
+              <h2 id="order-tab">Pre-order your Eleif hoodie</h2>
+              <p>Reserve the next drop for $199 — carbon-neutral shipping and elephant care support included.</p>
+            </div>
+            <section class="order-overview" aria-label="Eleif hoodie details">
+              <div class="order-card order-card--price">
+                <span class="order-price__label">Price</span>
+                <span class="order-price__value">$199</span>
+                <p class="order-price__note">Each purchase funds care for orphaned elephants and covers worldwide shipping.</p>
+              </div>
+              <div class="order-card">
+                <h3 class="order-card__heading">Available sizes</h3>
+                <ul class="order-list">
+                  <li>S · 34-36&quot; chest</li>
+                  <li>M · 38-40&quot; chest</li>
+                  <li>L · 42-44&quot; chest</li>
+                  <li>XL · 46-48&quot; chest</li>
+                </ul>
+              </div>
+              <div class="order-card">
+                <h3 class="order-card__heading">Available colors</h3>
+                <ul class="order-list order-list--swatches">
+                  <li>
+                    <span class="order-swatch order-swatch--grey" aria-hidden="true"></span>
+                    Storm grey
+                  </li>
+                  <li>
+                    <span class="order-swatch order-swatch--black" aria-hidden="true"></span>
+                    Midnight black
+                  </li>
+                </ul>
+              </div>
+            </section>
+            <form
+              class="form order-form"
+              data-order-form
+              action="https://formspree.io/f/xkgqagnj"
+              method="POST"
+            >
+              <input type="hidden" name="form-name" value="eleif hoodie order" />
+              <input type="hidden" name="_redirect" value="thank-you-order.html" />
+              <input type="hidden" name="_subject" value="New Eleif Hoodie Order" />
+              <input type="hidden" name="_to" value="enzo@design-prism.com" />
+              <input type="hidden" name="_replyto" value="" />
+              <fieldset class="form__section">
+                <legend>Contact</legend>
+                <div class="form__group">
+                  <label for="order-name">First and last name</label>
+                  <input
+                    id="order-name"
+                    name="order-name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Your full name"
+                    required
+                  />
+                </div>
+                <div class="form__group">
+                  <label for="order-email">Email</label>
+                  <input
+                    id="order-email"
+                    name="order-email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+                <div class="form__group">
+                  <label for="order-phone">Phone (optional)</label>
+                  <input
+                    id="order-phone"
+                    name="order-phone"
+                    type="tel"
+                    autocomplete="tel"
+                    placeholder="We’ll text you shipping updates"
+                  />
+                </div>
+              </fieldset>
+              <fieldset class="form__section">
+                <legend>Shipping address</legend>
+                <div class="form__group">
+                  <label for="order-street">Street address</label>
+                  <input
+                    id="order-street"
+                    name="order-street"
+                    type="text"
+                    autocomplete="shipping street-address"
+                    placeholder="123 Elephant Way"
+                    required
+                  />
+                </div>
+                <div class="form__group form__group--inline">
+                  <div>
+                    <label for="order-city">City</label>
+                    <input
+                      id="order-city"
+                      name="order-city"
+                      type="text"
+                      autocomplete="shipping address-level2"
+                      placeholder="Nairobi"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label for="order-region">State / region</label>
+                    <input
+                      id="order-region"
+                      name="order-region"
+                      type="text"
+                      autocomplete="shipping address-level1"
+                      placeholder="Region"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label for="order-postal">Postal code</label>
+                    <input
+                      id="order-postal"
+                      name="order-postal"
+                      type="text"
+                      autocomplete="shipping postal-code"
+                      placeholder="00000"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="form__group">
+                  <label for="order-country">Country</label>
+                  <input
+                    id="order-country"
+                    name="order-country"
+                    type="text"
+                    autocomplete="shipping country"
+                    placeholder="Country"
+                    required
+                  />
+                </div>
+              </fieldset>
+              <fieldset class="form__section form__section--choices">
+                <legend>Hoodie selection</legend>
+                <div class="order-preferences">
+                  <div class="order-preference">
+                    <span class="order-preference__label">Size</span>
+                    <div class="choice-grid choice-grid--compact">
+                      <label class="choice">
+                        <input class="choice__input visually-hidden" type="radio" name="order-size" value="s" required />
+                        <span class="choice__label">S</span>
+                      </label>
+                      <label class="choice">
+                        <input class="choice__input visually-hidden" type="radio" name="order-size" value="m" required />
+                        <span class="choice__label">M</span>
+                      </label>
+                      <label class="choice">
+                        <input class="choice__input visually-hidden" type="radio" name="order-size" value="l" required />
+                        <span class="choice__label">L</span>
+                      </label>
+                      <label class="choice">
+                        <input class="choice__input visually-hidden" type="radio" name="order-size" value="xl" required />
+                        <span class="choice__label">XL</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="order-preference">
+                    <span class="order-preference__label">Color</span>
+                    <div class="choice-grid choice-grid--compact">
+                      <label class="choice">
+                        <input class="choice__input visually-hidden" type="radio" name="order-color" value="grey" required />
+                        <span class="choice__label">Grey</span>
+                      </label>
+                      <label class="choice">
+                        <input class="choice__input visually-hidden" type="radio" name="order-color" value="black" required />
+                        <span class="choice__label">Black</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="order-preference">
+                    <label for="order-quantity" class="order-preference__label">Quantity</label>
+                    <input
+                      id="order-quantity"
+                      name="order-quantity"
+                      type="number"
+                      min="1"
+                      max="5"
+                      value="1"
+                      inputmode="numeric"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+              <p class="form__error order-form__error" data-order-error hidden role="alert"></p>
+              <div class="form__footer order-form__footer">
+                <button class="button button--primary" type="submit">
+                  place order request
+                </button>
+                <p class="order-form__note">We’ll confirm availability and send your checkout link promptly.</p>
               </div>
             </form>
           </article>

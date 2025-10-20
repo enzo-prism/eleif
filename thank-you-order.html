@@ -3,15 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eleif | Application Success</title>
+    <title>Eleif | Order Request Received</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="page">
       <header class="page__header">
         <div>
-          <h1 class="page__title">eleif</h1>
-          <p class="page__tagline">premium weighted hoodies funding care for orphaned baby elephants.</p>
+          <div class="brand">
+            <img
+              class="brand__logo"
+              src="./assets/gallery/Eleif%20Logo.webp"
+              alt="Eleif elephant logo"
+              width="128"
+              height="128"
+              loading="lazy"
+            />
+            <div class="brand__copy">
+              <h1 class="page__title">Eleif</h1>
+              <p class="page__tagline">premium weighted hoodies funding care for orphaned baby elephants.</p>
+            </div>
+          </div>
         </div>
         <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
           <span class="toggle__icon" aria-hidden="true"></span>
@@ -21,16 +33,22 @@
         <section class="panels">
           <article class="panel panel--active">
             <div class="panel__header">
-              <h2>application success</h2>
-              <p>your hoodie is on the way—thanks for helping us grow the eleif community.</p>
+              <h2>order request received</h2>
+              <p>we’re lining up your hoodie now and will send your checkout link shortly.</p>
             </div>
             <div class="form-success" aria-live="polite">
-              <h3 class="form-success__title">application success</h3>
-              <p class="form-success__subtitle">if you shared your email or phone number, we’ll be texting you shipping updates.</p>
+              <h3 class="form-success__title">thank you for supporting eleif</h3>
+              <p class="form-success__subtitle">
+                a confirmation email is on its way to you. our team will reach out with tracking updates as soon as your
+                hoodie ships.
+              </p>
               <div class="form-success__actions">
-                <button class="button button--primary" type="button" data-share-form>
-                  know someone who’s interested in modeling? share the form
-                </button>
+                <a class="button button--primary" href="./index.html#gallery">
+                  explore the community gallery
+                </a>
+                <a class="button button--ghost" href="./index.html#order">
+                  view your order details
+                </a>
                 <a
                   class="button button--ghost"
                   href="https://www.instagram.com/the_eleif?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr"
@@ -40,7 +58,6 @@
                   follow us on instagram
                 </a>
               </div>
-              <p class="form-success__feedback" data-share-feedback hidden></p>
             </div>
           </article>
         </section>
@@ -52,3 +69,4 @@
     <script src="./script.js" defer></script>
   </body>
 </html>
+

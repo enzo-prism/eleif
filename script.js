@@ -13,11 +13,119 @@ const replyToField =
   modelForm instanceof HTMLFormElement ? modelForm.querySelector('input[name="_replyto"]') : null;
 const redirectField =
   modelForm instanceof HTMLFormElement ? modelForm.querySelector('input[name="_redirect"]') : null;
-const formError =
+const modelFormError =
   modelForm instanceof HTMLFormElement ? modelForm.querySelector("[data-form-error]") : null;
-const submitButton =
+const modelSubmitButton =
   modelForm instanceof HTMLFormElement ? modelForm.querySelector('button[type="submit"]') : null;
+const orderForm = document.querySelector("[data-order-form]");
+const orderEmailInput =
+  orderForm instanceof HTMLFormElement ? orderForm.querySelector("#order-email") : null;
+const orderReplyField =
+  orderForm instanceof HTMLFormElement ? orderForm.querySelector('input[name="_replyto"]') : null;
+const orderRedirectField =
+  orderForm instanceof HTMLFormElement ? orderForm.querySelector('input[name="_redirect"]') : null;
+const orderError =
+  orderForm instanceof HTMLFormElement ? orderForm.querySelector("[data-order-error]") : null;
+const orderSubmitButton =
+  orderForm instanceof HTMLFormElement ? orderForm.querySelector('button[type="submit"]') : null;
 const STORAGE_KEY = "atelier-theme";
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+
+const toAbsoluteUrl = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    return new URL(value, window.location.href).toString();
+  } catch (error) {
+    return value;
+  }
+};
+
+const setupFormSubmission = ({
+  form,
+  redirectField,
+  replySource,
+  replyField,
+  submitButton,
+  errorNode,
+  fallbackRedirect,
+}) => {
+  if (!(form instanceof HTMLFormElement)) {
+    return;
+  }
+
+  const resolvedFallback = toAbsoluteUrl(fallbackRedirect);
+
+  if (redirectField) {
+    redirectField.value = toAbsoluteUrl(redirectField.value || fallbackRedirect) || resolvedFallback;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (typeof form.reportValidity === "function" && !form.reportValidity()) {
+      return;
+    }
+
+    if (replyField && replySource) {
+      const rawValue = replySource.value.trim();
+      replyField.value = EMAIL_PATTERN.test(rawValue) ? rawValue : "";
+    }
+
+    if (errorNode) {
+      errorNode.hidden = true;
+      errorNode.textContent = "";
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.dataset.loading = "true";
+    }
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method || "POST",
+        headers: { Accept: "application/json" },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const targetUrl = redirectField?.value || resolvedFallback || toAbsoluteUrl("thank-you.html");
+        window.location.href = targetUrl;
+        return;
+      }
+
+      const payload = await response.json().catch(() => null);
+      const message =
+        payload?.errors?.[0]?.message ||
+        payload?.error ||
+        "something went wrong while submitting. please try again.";
+
+      if (errorNode) {
+        errorNode.textContent = message;
+        errorNode.hidden = false;
+      } else {
+        window.alert(message);
+      }
+    } catch (error) {
+      if (errorNode) {
+        errorNode.textContent = "we couldn’t reach the server. please check your connection and try again.";
+        errorNode.hidden = false;
+      } else {
+        window.alert("we couldn’t reach the server. please try again.");
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.dataset.loading = "false";
+      }
+    }
+  });
+};
 
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -47,25 +155,34 @@ themeToggle.addEventListener("click", () => {
 
 const knownTabIds = tabs.map((tab) => tab.dataset.tab);
 
+const normalizeTabId = (id) => {
+  if (id === "form") {
+    return "model";
+  }
+  return id;
+};
+
 const activateTab = (targetId, { updateHash = true } = {}) => {
-  if (!targetId || !knownTabIds.includes(targetId)) {
+  const safeTargetId = normalizeTabId(targetId);
+
+  if (!safeTargetId || !knownTabIds.includes(safeTargetId)) {
     return;
   }
 
   tabs.forEach((tab) => {
-    const isActive = tab.dataset.tab === targetId;
+    const isActive = tab.dataset.tab === safeTargetId;
     tab.classList.toggle("tabs__button--active", isActive);
     tab.setAttribute("aria-pressed", String(isActive));
   });
 
   panels.forEach((panel) => {
-    const isActive = panel.dataset.panel === targetId;
+    const isActive = panel.dataset.panel === safeTargetId;
     panel.classList.toggle("panel--active", isActive);
     panel.toggleAttribute("hidden", !isActive);
   });
 
   if (updateHash && typeof history.replaceState === "function") {
-    history.replaceState(null, "", `#${targetId}`);
+    history.replaceState(null, "", `#${safeTargetId}`);
   }
 };
 
@@ -268,80 +385,33 @@ const renderGallery = () => {
 renderGallery();
 
 const defaultTab = "gallery";
-const initialHash = window.location.hash.slice(1);
+const initialHash = normalizeTabId(window.location.hash.slice(1));
 const initialTab = knownTabIds.includes(initialHash) ? initialHash : defaultTab;
 
 activateTab(initialTab, { updateHash: false });
 
-if (modelForm) {
-  if (redirectField) {
-    const thankYouUrl = new URL("thank-you.html", window.location.href);
-    redirectField.value = thankYouUrl.toString();
-  }
+setupFormSubmission({
+  form: modelForm,
+  redirectField,
+  replySource: contactInput,
+  replyField: replyToField,
+  submitButton: modelSubmitButton,
+  errorNode: modelFormError,
+  fallbackRedirect: "thank-you.html",
+});
 
-  modelForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    if (replyToField && contactInput) {
-      const rawValue = contactInput.value.trim();
-      const looksLikeEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(rawValue);
-      replyToField.value = looksLikeEmail ? rawValue : "";
-    }
-
-    if (formError) {
-      formError.hidden = true;
-      formError.textContent = "";
-    }
-
-    if (submitButton) {
-      submitButton.disabled = true;
-      submitButton.dataset.loading = "true";
-    }
-
-    const formData = new FormData(modelForm);
-
-    try {
-      const response = await fetch(modelForm.action, {
-        method: modelForm.method || "POST",
-        headers: { Accept: "application/json" },
-        body: formData,
-      });
-
-      if (response.ok) {
-        const targetUrl = redirectField?.value || new URL("thank-you.html", window.location.href).toString();
-        window.location.href = targetUrl;
-        return;
-      }
-
-      const payload = await response.json().catch(() => null);
-      const message =
-        payload?.errors?.[0]?.message ||
-        payload?.error ||
-        "something went wrong while submitting. please try again.";
-      if (formError) {
-        formError.textContent = message;
-        formError.hidden = false;
-      } else {
-        window.alert(message);
-      }
-    } catch (error) {
-      if (formError) {
-        formError.textContent = "we couldn’t reach the server. please check your connection and try again.";
-        formError.hidden = false;
-      } else {
-        window.alert("we couldn’t reach the server. please try again.");
-      }
-    } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
-        submitButton.dataset.loading = "false";
-      }
-    }
-  });
-}
+setupFormSubmission({
+  form: orderForm,
+  redirectField: orderRedirectField,
+  replySource: orderEmailInput,
+  replyField: orderReplyField,
+  submitButton: orderSubmitButton,
+  errorNode: orderError,
+  fallbackRedirect: "thank-you-order.html",
+});
 
 window.addEventListener("hashchange", () => {
-  const hash = window.location.hash.slice(1);
+  const hash = normalizeTabId(window.location.hash.slice(1));
   if (knownTabIds.includes(hash)) {
     activateTab(hash, { updateHash: false });
   }
@@ -368,7 +438,7 @@ const setShareFeedback = (message) => {
 
 if (shareButton) {
   shareButton.addEventListener("click", async () => {
-    const shareUrl = new URL("index.html#form", window.location.href).toString();
+    const shareUrl = new URL("index.html#model", window.location.href).toString();
     const shareData = {
       title: "Eleif Model Application",
       text: "Apply to join the Eleif model community and receive your weighted hoodie.",
