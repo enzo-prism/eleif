@@ -4,6 +4,10 @@ const tabs = Array.from(document.querySelectorAll(".tabs__button"));
 const panels = Array.from(document.querySelectorAll(".panel"));
 const galleryRoot = document.querySelector("[data-gallery]");
 const galleryEmptyState = document.querySelector("[data-gallery-empty]");
+const modelForm = document.querySelector("[data-model-form]");
+const formSuccess = document.querySelector("[data-form-success]");
+const shareButton = document.querySelector("[data-share-form]");
+const shareFeedback = document.querySelector("[data-share-feedback]");
 const STORAGE_KEY = "atelier-theme";
 
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
@@ -32,7 +36,13 @@ themeToggle.addEventListener("click", () => {
   applyTheme(nextTheme);
 });
 
-const activateTab = (targetId) => {
+const knownTabIds = tabs.map((tab) => tab.dataset.tab);
+
+const activateTab = (targetId, { updateHash = true } = {}) => {
+  if (!targetId || !knownTabIds.includes(targetId)) {
+    return;
+  }
+
   tabs.forEach((tab) => {
     const isActive = tab.dataset.tab === targetId;
     tab.classList.toggle("tabs__button--active", isActive);
@@ -44,6 +54,10 @@ const activateTab = (targetId) => {
     panel.classList.toggle("panel--active", isActive);
     panel.toggleAttribute("hidden", !isActive);
   });
+
+  if (updateHash && typeof history.replaceState === "function") {
+    history.replaceState(null, "", `#${targetId}`);
+  }
 };
 
 tabs.forEach((tab) => {
@@ -243,4 +257,80 @@ const renderGallery = () => {
 };
 
 renderGallery();
-activateTab("gallery");
+
+const defaultTab = "gallery";
+const initialHash = window.location.hash.slice(1);
+const initialTab = knownTabIds.includes(initialHash) ? initialHash : defaultTab;
+
+activateTab(initialTab, { updateHash: false });
+
+window.addEventListener("hashchange", () => {
+  const hash = window.location.hash.slice(1);
+  if (knownTabIds.includes(hash)) {
+    activateTab(hash, { updateHash: false });
+  }
+});
+
+if (modelForm && formSuccess) {
+  modelForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    modelForm.reset();
+    modelForm.setAttribute("hidden", "");
+    formSuccess.hidden = false;
+    if (shareFeedback) {
+      shareFeedback.hidden = true;
+      shareFeedback.textContent = "";
+    }
+
+    formSuccess.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
+
+let shareFeedbackTimeoutId;
+
+const setShareFeedback = (message) => {
+  if (!shareFeedback) {
+    return;
+  }
+
+  shareFeedback.textContent = message;
+  shareFeedback.hidden = false;
+
+  if (shareFeedbackTimeoutId) {
+    window.clearTimeout(shareFeedbackTimeoutId);
+  }
+
+  shareFeedbackTimeoutId = window.setTimeout(() => {
+    shareFeedback.hidden = true;
+  }, 4200);
+};
+
+if (shareButton) {
+  shareButton.addEventListener("click", async () => {
+    const shareUrl = `${window.location.origin}${window.location.pathname}#form`;
+    const shareData = {
+      title: "Eleif Model Application",
+      text: "Apply to join the Eleif model community and receive your weighted hoodie.",
+      url: shareUrl,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setShareFeedback("thanks for sharing the application.");
+        return;
+      }
+
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+        setShareFeedback("link copied to your clipboard.");
+        return;
+      }
+
+      window.prompt("Copy this link to share the Eleif model application:", shareUrl);
+      setShareFeedback("copy the link above to share the form.");
+    } catch (error) {
+      setShareFeedback("we couldn’t share automatically. copy the link instead.");
+    }
+  });
+}

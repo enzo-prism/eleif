@@ -39,59 +39,128 @@
           </article>
           <article class="panel" data-panel="form" aria-labelledby="form-tab" hidden>
             <div class="panel__header">
-              <h2 id="form-tab">Partner with Eleif</h2>
-              <p>Share your story or collaboration idea so we can expand the impact for Kenya's baby elephants.</p>
+              <h2 id="form-tab">Eleif model application</h2>
+              <p>Apply to rep the Eleif weighted hoodie, help us tell the story, and we’ll outfit you for your next shoot.</p>
             </div>
-            <form class="form" novalidate>
-              <fieldset class="form__section">
-                <legend>Contact</legend>
-                <div class="form__group">
-                  <label for="contact-name">Name</label>
-                  <input
-                    id="contact-name"
-                    name="contact-name"
-                    type="text"
-                    placeholder="Your full name"
-                  />
+            <section class="form-intro" aria-label="How the Eleif model application works">
+              <p class="form-intro__eyebrow">How it works</p>
+              <ol class="form-steps">
+                <li class="form-steps__item">
+                  <span class="form-steps__step">Step 1</span> Apply via this form.
+                </li>
+                <li class="form-steps__item">
+                  <span class="form-steps__step">Step 2</span> If you’re selected we’ll send you a free hoodie.
+                </li>
+                <li class="form-steps__item">
+                  <span class="form-steps__step">Step 3</span> Take pics in your hoodie and share them with us to feature in our marketing.
+                </li>
+              </ol>
+            </section>
+            <form class="form" data-model-form>
+              <fieldset class="form__section form__section--choices">
+                <legend>Size</legend>
+                <div class="choice-grid">
+                  <label class="choice">
+                    <input class="choice__input visually-hidden" type="radio" name="size" value="s" required />
+                    <span class="choice__label">S</span>
+                  </label>
+                  <label class="choice">
+                    <input class="choice__input visually-hidden" type="radio" name="size" value="m" required />
+                    <span class="choice__label">M</span>
+                  </label>
+                  <label class="choice">
+                    <input class="choice__input visually-hidden" type="radio" name="size" value="l" required />
+                    <span class="choice__label">L</span>
+                  </label>
+                  <label class="choice">
+                    <input class="choice__input visually-hidden" type="radio" name="size" value="xl" required />
+                    <span class="choice__label">XL</span>
+                  </label>
                 </div>
-                <div class="form__group">
-                  <label for="contact-email">Email</label>
-                  <input
-                    id="contact-email"
-                    name="contact-email"
-                    type="email"
-                    placeholder="you@example.com"
-                  />
+              </fieldset>
+              <fieldset class="form__section form__section--choices">
+                <legend>Color</legend>
+                <div class="choice-grid">
+                  <label class="choice">
+                    <input class="choice__input visually-hidden" type="radio" name="color" value="grey" required />
+                    <span class="choice__label">Grey</span>
+                  </label>
+                  <label class="choice">
+                    <input class="choice__input visually-hidden" type="radio" name="color" value="black" required />
+                    <span class="choice__label">Black</span>
+                  </label>
                 </div>
               </fieldset>
               <fieldset class="form__section">
-                <legend>Details</legend>
+                <legend>Shipping details</legend>
                 <div class="form__group">
-                  <label for="interest-select">Interest</label>
-                  <select id="interest-select" name="interest-select">
-                    <option value="">Select an interest</option>
-                    <option value="impact-updates">Impact and rescue updates</option>
-                    <option value="bulk-orders">Bulk or corporate gifting</option>
-                    <option value="content-collab">Content collaboration</option>
-                    <option value="press">Press inquiries</option>
-                  </select>
+                  <label for="applicant-name">First and last name</label>
+                  <input
+                    id="applicant-name"
+                    name="applicant-name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Your full name"
+                    required
+                  />
                 </div>
                 <div class="form__group">
-                  <label for="project-notes">Message</label>
+                  <label for="applicant-address">Address</label>
                   <textarea
-                    id="project-notes"
-                    name="project-notes"
-                    rows="4"
-                    placeholder="Tell us how you'd like to partner with Eleif."
+                    id="applicant-address"
+                    name="applicant-address"
+                    rows="3"
+                    autocomplete="shipping street-address"
+                    placeholder="Where should we send your hoodie?"
+                    required
                   ></textarea>
+                </div>
+                <div class="form__group">
+                  <label for="instagram-handle">Instagram link</label>
+                  <input
+                    id="instagram-handle"
+                    name="instagram-handle"
+                    type="url"
+                    placeholder="https://instagram.com/your-handle"
+                    inputmode="url"
+                    required
+                  />
+                </div>
+                <div class="form__group">
+                  <label for="contact-updates">Phone number or email <span class="form__optional">(optional)</span></label>
+                  <input
+                    id="contact-updates"
+                    name="contact-updates"
+                    type="text"
+                    autocomplete="email"
+                    placeholder="We’ll send your shipping updates here"
+                  />
                 </div>
               </fieldset>
               <div class="form__footer">
-                <button class="button" type="submit" disabled>
-                  Join the mission (coming soon)
+                <button class="button button--primary" type="submit">
+                  Submit application
                 </button>
               </div>
             </form>
+            <div class="form-success" data-form-success hidden aria-live="polite">
+              <h3 class="form-success__title">Application success</h3>
+              <p class="form-success__subtitle">If you shared your email or phone number, we’ll be texting you shipping updates.</p>
+              <div class="form-success__actions">
+                <button class="button button--primary" type="button" data-share-form>
+                  Know someone who’s interested in modeling? Share the form
+                </button>
+                <a
+                  class="button button--ghost"
+                  href="https://instagram.com/eleif"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Follow us on Instagram
+                </a>
+              </div>
+              <p class="form-success__feedback" data-share-feedback hidden></p>
+            </div>
           </article>
         </section>
       </main>
