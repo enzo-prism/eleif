@@ -241,6 +241,17 @@ body.dialog-open {
   display: inline-block;
 }
 
+.tabs__icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
 .tabs__button:hover,
 .tabs__button:focus-visible {
   color: var(--foreground);
