@@ -1627,6 +1627,34 @@ body.dialog-open {
   }
 }
 
+@media (max-width: 768px) {
+  .tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .tabs__button {
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 12px 10px;
+    gap: 6px;
+    min-height: 60px;
+  }
+
+  .tabs__label {
+    font-size: 0.82rem;
+    line-height: 1.2;
+  }
+
+  .tabs__icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 @media (max-width: 640px) {
   .page {
     padding: 20px 18px;
@@ -1661,14 +1689,12 @@ body.dialog-open {
 
   .tabs {
     width: 100%;
-    justify-content: stretch;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .tabs__button {
-    flex: 1 1 50%;
-    justify-content: center;
-    padding: 10px 12px;
-    font-size: 0.85rem;
+    padding: 12px 10px;
+    min-height: 58px;
   }
 
   .panel {
