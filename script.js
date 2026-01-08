@@ -434,6 +434,7 @@ const TAB_TITLES = Object.freeze({
   gallery: "eleif · gallery",
   model: "eleif · model application",
   order: "eleif · order",
+  adopt: "eleif · adopt an elephant",
 });
 const DEFAULT_TITLE = "eleif · premium weighted hoodies";
 

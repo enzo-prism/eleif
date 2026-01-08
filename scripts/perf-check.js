@@ -57,4 +57,45 @@ if (!css.includes("100dvh") || !css.includes("100svh")) {
   throw new Error("missing dynamic viewport units for dialog");
 }
 
+if (!html.includes('data-tab="adopt"')) {
+  throw new Error("missing adopt tab");
+}
+
+if (!html.includes('data-panel="adopt"')) {
+  throw new Error("missing adopt panel");
+}
+
+if (!script.includes("adopt: \"eleif · adopt an elephant\"")) {
+  throw new Error("missing adopt tab title");
+}
+
+if (!html.includes('class="adopt-example"')) {
+  throw new Error("missing adopt example dropdown");
+}
+
+if (/text-transform:\s*uppercase/i.test(css)) {
+  throw new Error("uppercase text-transform still present");
+}
+
+const htmlFiles = ["index.html", "thank-you.html", "thank-you-order.html"];
+const stripHtml = (value) =>
+  value
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+htmlFiles.forEach((file) => {
+  const contents = readFile(file);
+  const textOnly = stripHtml(contents);
+  if (/[A-Z]/.test(textOnly)) {
+    throw new Error(`uppercase letter found in visible text for ${file}`);
+  }
+
+  if (/placeholder=\"[^\"]*[A-Z][^\"]*\"/.test(contents)) {
+    throw new Error(`uppercase letter found in placeholder for ${file}`);
+  }
+});
+
 console.log("perf checks passed");

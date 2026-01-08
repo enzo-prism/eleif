@@ -84,6 +84,15 @@
             </svg>
             <span class="tabs__label">order</span>
           </button>
+          <button class="tabs__button" data-tab="adopt" type="button">
+            <svg class="tabs__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="7.5" cy="12" r="3.2"></circle>
+              <path d="M10.7 12h9.8"></path>
+              <path d="M18 12v3"></path>
+              <path d="M21 12v3"></path>
+            </svg>
+            <span class="tabs__label">adopt an elephant</span>
+          </button>
         </nav>
         <section class="panels">
           <article class="panel panel--active" data-panel="gallery" aria-label="gallery">
@@ -240,7 +249,7 @@
           </article>
           <article class="panel" data-panel="order" aria-labelledby="order-tab" hidden>
             <div class="panel__header">
-              <h2 id="order-tab">Order your hoodie</h2>
+              <h2 id="order-tab">order your hoodie</h2>
             </div>
             <div class="order-shell">
               <section class="order-product" aria-label="eleif hoodie details">
@@ -371,7 +380,7 @@
                   <h3 class="order-card__heading">order summary</h3>
                   <div class="order-summary__lines">
                     <div class="order-summary__row">
-                      <span>Order your hoodie</span>
+                      <span>order your hoodie</span>
                       <span>$259.99</span>
                     </div>
                     <div class="order-summary__row">
@@ -490,7 +499,7 @@
                         name="order-street"
                         type="text"
                         autocomplete="shipping street-address"
-                        placeholder="200 Rodeo Dr"
+                        placeholder="200 rodeo dr"
                         required
                       />
                     </div>
@@ -502,7 +511,7 @@
                           name="order-city"
                           type="text"
                           autocomplete="shipping address-level2"
-                          placeholder="Beverly Hills"
+                          placeholder="beverly hills"
                           required
                         />
                       </div>
@@ -513,7 +522,7 @@
                           name="order-region"
                           type="text"
                           autocomplete="shipping address-level1"
-                          placeholder="CA"
+                          placeholder="ca"
                           required
                         />
                       </div>
@@ -536,7 +545,7 @@
                         name="order-country"
                         type="text"
                         autocomplete="shipping country"
-                        placeholder="United States"
+                        placeholder="united states"
                         required
                       />
                     </div>
@@ -550,6 +559,126 @@
                 </form>
               </aside>
             </div>
+          </article>
+          <article class="panel" data-panel="adopt" aria-label="adopt" hidden>
+            <section class="adopt-hero" aria-label="elephant key lookup">
+              <div class="adopt-key">
+                <div class="adopt-key__field">
+                  <svg class="adopt-key__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="7.5" cy="12" r="3.2"></circle>
+                    <path d="M10.7 12h9.8"></path>
+                    <path d="M18 12v3"></path>
+                    <path d="M21 12v3"></path>
+                  </svg>
+                  <input
+                    id="elephant-key"
+                    class="adopt-key__input"
+                    type="text"
+                    inputmode="text"
+                    autocomplete="off"
+                    placeholder="enter your elephant key"
+                    aria-describedby="adopt-key-help"
+                  />
+                </div>
+                <p class="adopt-key__helper" id="adopt-key-help">example: el-4821-lani</p>
+              </div>
+            </section>
+            <section class="adopt-how" aria-label="how it works">
+              <div class="adopt-card adopt-faq">
+                <h3>how it works</h3>
+                <dl class="adopt-faq__list">
+                  <div>
+                    <dt>how do i get an elephant key?</dt>
+                    <dd>when you order a hoodie the eleif team sends you your unique elephant key.</dd>
+                    <a class="button button--ghost adopt-faq__action" href="#order">order a hoodie</a>
+                  </div>
+                  <div>
+                    <dt>what’s the elephant key for?</dt>
+                    <dd>
+                      when you order a hoodie you “adopt” a baby elephant in kenya. the profits from your purchase go
+                      directly to your adopted elephant—use your key to track updates here.
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </section>
+            <details class="adopt-example">
+              <summary class="adopt-example__summary">
+                <span>see example updates</span>
+                <svg class="adopt-example__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </summary>
+              <div class="adopt-example__content">
+                <div class="adopt-card adopt-group">
+                  <div class="adopt-feed">
+                    <div class="adopt-feed__header">
+                      <h3>latest updates</h3>
+                      <span class="adopt-feed__note">example feed</span>
+                    </div>
+                    <div class="adopt-feed__list">
+                      <article class="adopt-feed__item">
+                        <div class="adopt-feed__media">
+                          <img
+                            src="data:image/svg+xml;utf8,<svg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20300'><rect%20width='400'%20height='300'%20fill='%23e1e1e1'/><text%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23777777'%20font-size='20'%20font-family='Arial,%20sans-serif'>image%20placeholder</text></svg>"
+                            alt="image placeholder"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                        <div class="adopt-feed__body">
+                          <p class="adopt-feed__timestamp">aug 24, 2024 · 6:18 pm</p>
+                          <p class="adopt-feed__text">
+                            lani spent the afternoon playing in the shade after a veterinary check-in.
+                          </p>
+                        </div>
+                      </article>
+                      <article class="adopt-feed__item">
+                        <div class="adopt-feed__media adopt-feed__media--video">
+                          <img
+                            src="data:image/svg+xml;utf8,<svg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20300'><rect%20width='400'%20height='300'%20fill='%23e1e1e1'/><text%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23777777'%20font-size='20'%20font-family='Arial,%20sans-serif'>image%20placeholder</text></svg>"
+                            alt="image placeholder"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <span class="adopt-feed__badge">video</span>
+                        </div>
+                        <div class="adopt-feed__body">
+                          <p class="adopt-feed__timestamp">aug 21, 2024 · 9:02 am</p>
+                          <p class="adopt-feed__text">
+                            morning milk bottle and a quick splash in the mud pit.
+                          </p>
+                        </div>
+                      </article>
+                      <article class="adopt-feed__item">
+                        <div class="adopt-feed__media">
+                          <img
+                            src="data:image/svg+xml;utf8,<svg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20400%20300'><rect%20width='400'%20height='300'%20fill='%23e1e1e1'/><text%20x='50%25'%20y='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20fill='%23777777'%20font-size='20'%20font-family='Arial,%20sans-serif'>image%20placeholder</text></svg>"
+                            alt="image placeholder"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                        <div class="adopt-feed__body">
+                          <p class="adopt-feed__timestamp">aug 18, 2024 · 4:45 pm</p>
+                          <p class="adopt-feed__text">
+                            lani bonded with her herd mates during evening enrichment.
+                          </p>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                  <div class="adopt-story">
+                    <p class="adopt-story__eyebrow">about lani</p>
+                    <h3>the story of your adopted elephant</h3>
+                    <p>
+                      lani arrived at the nursery after being rescued in northern kenya. your hoodie purchase helps
+                      provide her food, care, and daily enrichment.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </details>
           </article>
         </section>
       </main>
