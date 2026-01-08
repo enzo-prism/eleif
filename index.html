@@ -226,40 +226,77 @@
             </div>
             <div class="order-shell">
               <section class="order-product" aria-label="eleif hoodie details">
-                <div class="order-media">
+                <div class="order-media" data-order-media>
                   <figure class="order-media__main">
                     <img
                       src="./assets/gallery/model%20with%20grey%20hoodie.webp"
                       alt="model wearing a grey eleif hoodie."
                       loading="eager"
                       decoding="async"
+                      data-order-main
                     />
                   </figure>
                   <div class="order-media__thumbs">
-                    <figure class="order-media__thumb">
+                    <button
+                      class="order-media__thumb order-media__thumb--active"
+                      type="button"
+                      aria-pressed="true"
+                      data-order-thumb
+                      data-image-src="./assets/gallery/model%20with%20grey%20hoodie.webp"
+                      data-image-alt="model wearing a grey eleif hoodie."
+                    >
+                      <img
+                        src="./assets/gallery/model%20with%20grey%20hoodie.webp"
+                        alt="model wearing a grey eleif hoodie."
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </button>
+                    <button
+                      class="order-media__thumb"
+                      type="button"
+                      aria-pressed="false"
+                      data-order-thumb
+                      data-image-src="./assets/gallery/black%20hoodie%20album%20background.webp"
+                      data-image-alt="black eleif hoodie styled against a wall of vinyl records."
+                    >
                       <img
                         src="./assets/gallery/black%20hoodie%20album%20background.webp"
                         alt="black eleif hoodie styled against a wall of vinyl records."
                         loading="lazy"
                         decoding="async"
                       />
-                    </figure>
-                    <figure class="order-media__thumb">
+                    </button>
+                    <button
+                      class="order-media__thumb"
+                      type="button"
+                      aria-pressed="false"
+                      data-order-thumb
+                      data-image-src="./assets/gallery/hoodie%20and%20watch.webp"
+                      data-image-alt="close-up of an eleif hoodie cuff paired with a watch."
+                    >
                       <img
                         src="./assets/gallery/hoodie%20and%20watch.webp"
                         alt="close-up of an eleif hoodie cuff paired with a watch."
                         loading="lazy"
                         decoding="async"
                       />
-                    </figure>
-                    <figure class="order-media__thumb">
+                    </button>
+                    <button
+                      class="order-media__thumb"
+                      type="button"
+                      aria-pressed="false"
+                      data-order-thumb
+                      data-image-src="./assets/gallery/blonde%20model%20in%20light%20grey%20hoodie.webp"
+                      data-image-alt="blonde model wearing a light grey eleif hoodie."
+                    >
                       <img
                         src="./assets/gallery/blonde%20model%20in%20light%20grey%20hoodie.webp"
                         alt="blonde model wearing a light grey eleif hoodie."
                         loading="lazy"
                         decoding="async"
                       />
-                    </figure>
+                    </button>
                   </div>
                 </div>
                 <div class="order-product__info">
@@ -290,29 +327,7 @@
                     <h3 class="order-card__heading">shipping</h3>
                     <p class="order-card__body">tracking included, worldwide delivery, and support for customs.</p>
                   </div>
-                  <div class="order-card">
-                    <h3 class="order-card__heading">impact</h3>
-                    <p class="order-card__body">each hoodie funds veterinary care for orphaned baby elephants.</p>
-                  </div>
                 </div>
-                <dl class="order-specs">
-                  <div class="order-specs__item">
-                    <dt>weight</dt>
-                    <dd>2.5 kg balanced fill</dd>
-                  </div>
-                  <div class="order-specs__item">
-                    <dt>fabric</dt>
-                    <dd>brushed fleece interior, cotton blend shell</dd>
-                  </div>
-                  <div class="order-specs__item">
-                    <dt>fit</dt>
-                    <dd>oversized, unisex, true to size</dd>
-                  </div>
-                  <div class="order-specs__item">
-                    <dt>care</dt>
-                    <dd>machine wash cold, tumble dry low</dd>
-                  </div>
-                </dl>
               </section>
               <aside class="order-checkout" aria-label="checkout details">
                 <div class="order-card order-summary">

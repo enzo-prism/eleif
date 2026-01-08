@@ -31,8 +31,44 @@ const orderError =
   orderForm instanceof HTMLFormElement ? orderForm.querySelector("[data-order-error]") : null;
 const orderSubmitButton =
   orderForm instanceof HTMLFormElement ? orderForm.querySelector('button[type="submit"]') : null;
+const orderMedia = document.querySelector("[data-order-media]");
+const orderMainImage =
+  orderMedia instanceof HTMLElement ? orderMedia.querySelector("[data-order-main]") : null;
+const orderThumbButtons = orderMedia
+  ? Array.from(orderMedia.querySelectorAll("[data-order-thumb]"))
+  : [];
 const STORAGE_KEY = "atelier-theme";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+
+const resolveOrderThumbData = (button) => {
+  const img = button.querySelector("img");
+  return {
+    src: button.dataset.imageSrc || img?.getAttribute("src"),
+    alt: button.dataset.imageAlt || img?.getAttribute("alt"),
+  };
+};
+
+const setOrderMainFromThumb = (button) => {
+  if (!(orderMainImage instanceof HTMLImageElement)) {
+    return;
+  }
+
+  const { src, alt } = resolveOrderThumbData(button);
+  if (!src) {
+    return;
+  }
+
+  orderMainImage.src = src;
+  if (alt) {
+    orderMainImage.alt = alt;
+  }
+
+  orderThumbButtons.forEach((thumb) => {
+    const isActive = thumb === button;
+    thumb.classList.toggle("order-media__thumb--active", isActive);
+    thumb.setAttribute("aria-pressed", String(isActive));
+  });
+};
 
 const toAbsoluteUrl = (value) => {
   if (!value) {
@@ -649,6 +685,22 @@ setupFormSubmission({
   errorNode: orderError,
   fallbackRedirect: "thank-you-order.html",
 });
+
+if (orderThumbButtons.length) {
+  orderThumbButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      setOrderMainFromThumb(button);
+    });
+  });
+
+  const activeThumb =
+    orderThumbButtons.find((button) => button.getAttribute("aria-pressed") === "true") ||
+    orderThumbButtons[0];
+
+  if (activeThumb) {
+    setOrderMainFromThumb(activeThumb);
+  }
+}
 
 window.addEventListener("hashchange", () => {
   const hash = normalizeTabId(window.location.hash.slice(1));
