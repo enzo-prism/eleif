@@ -4,6 +4,7 @@
   --background: #f2f1ed;
   --foreground: #1e1a16;
   --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: rgba(255, 255, 255, 0.96);
   --surface-alt: rgba(255, 255, 255, 0.6);
   --border: rgba(40, 43, 40, 0.12);
   --accent: #6f747c;
@@ -20,6 +21,7 @@
   --background: #0f1614;
   --foreground: #e5e7df;
   --surface: rgba(19, 25, 23, 0.82);
+  --surface-strong: rgba(19, 25, 23, 0.96);
   --surface-alt: rgba(19, 26, 24, 0.68);
   --border: rgba(229, 233, 225, 0.12);
   --accent: #a7adb4;
@@ -476,7 +478,8 @@ body.dialog-open {
   padding: 0;
   background: transparent;
   color: inherit;
-  max-width: min(520px, calc(100vw - 32px));
+  width: min(560px, calc(100vw - 32px));
+  max-width: 100%;
   margin: auto;
   z-index: 1000;
 }
@@ -498,13 +501,14 @@ body.dialog-open {
   display: grid;
   gap: 18px;
   padding: clamp(24px, 4vw, 32px);
-  background: var(--surface);
+  background: var(--surface-strong);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: 0 32px 80px -48px rgba(12, 16, 14, 0.65);
-  width: min(420px, calc(100vw - 48px));
-  max-height: calc(100vh - 96px);
+  width: min(460px, calc(100vw - 48px));
+  max-height: min(560px, calc(100vh - 96px));
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .how-it-works-dialog__header {
@@ -570,6 +574,7 @@ body.dialog-open {
 .form-steps__item {
   font-size: 0.95rem;
   color: var(--foreground);
+  line-height: 1.4;
 }
 
 .form-steps__step {
@@ -1014,10 +1019,17 @@ body.dialog-open {
 }
 
 .order-summary {
-  position: sticky;
-  top: 24px;
-  background: var(--surface);
+  position: static;
+  background: var(--surface-strong);
   border-color: rgba(112, 116, 123, 0.32);
+  z-index: 1;
+}
+
+@media (min-width: 960px) and (min-height: 720px) {
+  .order-summary {
+    position: sticky;
+    top: 24px;
+  }
 }
 
 .order-summary__lines {
@@ -1076,10 +1088,6 @@ body.dialog-open {
 @media (max-width: 800px) {
   .order-shell {
     grid-template-columns: 1fr;
-  }
-
-  .order-summary {
-    position: static;
   }
 
   .order-preference input[type="number"] {
@@ -1278,10 +1286,40 @@ body.dialog-open {
     padding: 12px 18px;
   }
 
+  .how-it-works-dialog {
+    width: 100%;
+  }
+
+  .how-it-works-dialog[open] {
+    place-items: end center;
+    padding: 12px;
+  }
+
   .how-it-works-dialog__content {
-    width: calc(100vw - 28px);
-    padding: 24px;
-    max-height: calc(100vh - 64px);
+    width: 100%;
+    border-radius: 24px 24px 16px 16px;
+    padding: 20px 20px 28px;
+    max-height: min(88vh, calc(100vh - 32px));
+    gap: 16px;
+    box-shadow: 0 -26px 60px -44px rgba(12, 16, 14, 0.6);
+  }
+
+  .how-it-works-dialog__header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--surface-strong);
+    padding-bottom: 12px;
+  }
+
+  .how-it-works-dialog__close {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+
+  .form-steps__step {
+    margin-right: 8px;
   }
 
   .form__section {
