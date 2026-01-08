@@ -1248,12 +1248,6 @@ body.dialog-open {
   outline: none;
 }
 
-.adopt-key__helper {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
 .adopt-card {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -1433,12 +1427,12 @@ body.dialog-open {
 .adopt-faq__list {
   margin: 0;
   display: grid;
-  gap: 16px;
+  gap: 22px;
 }
 
 .adopt-faq__list div {
   display: grid;
-  gap: 6px;
+  gap: 10px;
 }
 
 .adopt-faq__list dt {
@@ -1452,8 +1446,33 @@ body.dialog-open {
 
 .adopt-faq__action {
   justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 8px 16px;
   font-size: 0.85rem;
+  border-color: rgba(112, 116, 123, 0.35);
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: 0 10px 20px -18px rgba(32, 37, 31, 0.5);
+  transition: transform var(--transition-snappy), box-shadow var(--transition-snappy), border-color var(--transition-snappy);
+}
+
+.adopt-faq__action:hover,
+.adopt-faq__action:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  box-shadow: 0 14px 24px -20px rgba(32, 37, 31, 0.55);
+}
+
+.adopt-faq__icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 @media (max-width: 800px) {
