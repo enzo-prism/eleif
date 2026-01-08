@@ -215,16 +215,19 @@
                   />
                 </div>
                 <div class="form__group">
-                  <label for="contact-updates">phone number or email <span class="form__optional">(optional)</span></label>
+                  <label for="contact-updates">phone number</label>
                   <input
                     id="contact-updates"
                     name="contact-updates"
-                    type="text"
-                    inputmode="text"
-                    autocomplete="email"
-                    placeholder="we’ll send your shipping updates here"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    placeholder="(310) 555-0123"
+                    required
+                    aria-describedby="contact-updates-help"
                     data-contact-input
                   />
+                  <p class="form__helper" id="contact-updates-help">used to receive shipping updates.</p>
                 </div>
               </fieldset>
               <p class="form__error" data-form-error hidden role="alert"></p>

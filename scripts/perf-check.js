@@ -5,6 +5,7 @@ const readFile = (file) => fs.readFileSync(path.join(__dirname, "..", file), "ut
 
 const html = readFile("index.html");
 const script = readFile("script.js");
+const css = readFile("styles.css");
 
 const mainMatch = html.match(/<img[^>]*data-order-main[^>]*>/i);
 if (!mainMatch) {
@@ -46,6 +47,14 @@ if (!script.includes('fetchpriority", "high"')) {
 
 if (!script.includes('index === 0 ? "eager" : "lazy"')) {
   throw new Error("gallery first image not eager");
+}
+
+if (!css.includes("safe-area-inset")) {
+  throw new Error("missing safe area handling for dialog");
+}
+
+if (!css.includes("100dvh") || !css.includes("100svh")) {
+  throw new Error("missing dynamic viewport units for dialog");
 }
 
 console.log("perf checks passed");
