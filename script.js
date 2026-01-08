@@ -42,9 +42,13 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
 const resolveOrderThumbData = (button) => {
   const img = button.querySelector("img");
+  const width = Number(button.dataset.imageWidth || img?.getAttribute("width"));
+  const height = Number(button.dataset.imageHeight || img?.getAttribute("height"));
   return {
     src: button.dataset.imageSrc || img?.getAttribute("src"),
     alt: button.dataset.imageAlt || img?.getAttribute("alt"),
+    width: Number.isFinite(width) && width > 0 ? width : null,
+    height: Number.isFinite(height) && height > 0 ? height : null,
   };
 };
 
@@ -53,7 +57,7 @@ const setOrderMainFromThumb = (button) => {
     return;
   }
 
-  const { src, alt } = resolveOrderThumbData(button);
+  const { src, alt, width, height } = resolveOrderThumbData(button);
   if (!src) {
     return;
   }
@@ -61,6 +65,11 @@ const setOrderMainFromThumb = (button) => {
   orderMainImage.src = src;
   if (alt) {
     orderMainImage.alt = alt;
+  }
+
+  if (width && height) {
+    orderMainImage.setAttribute("width", String(width));
+    orderMainImage.setAttribute("height", String(height));
   }
 
   orderThumbButtons.forEach((thumb) => {
@@ -421,6 +430,12 @@ themeToggle.addEventListener("click", () => {
 });
 
 const knownTabIds = tabs.map((tab) => tab.dataset.tab);
+const TAB_TITLES = Object.freeze({
+  gallery: "eleif · gallery",
+  model: "eleif · model application",
+  order: "eleif · order",
+});
+const DEFAULT_TITLE = "eleif · premium weighted hoodies";
 
 const normalizeTabId = (id) => {
   if (id === "form") {
@@ -450,6 +465,10 @@ const activateTab = (targetId, { updateHash = true } = {}) => {
 
   if (safeTargetId === "gallery") {
     renderGallery();
+  }
+
+  if (document?.title) {
+    document.title = TAB_TITLES[safeTargetId] || DEFAULT_TITLE;
   }
 
   if (updateHash && typeof history.replaceState === "function") {
@@ -613,12 +632,68 @@ const resolveGallerySrc = (src) => {
   return encodeURI(`${GALLERY_BASE_PATH}${src}`);
 };
 
+let galleryIdleHandle = null;
+
+const cancelGalleryIdle = () => {
+  if (!galleryIdleHandle) {
+    return;
+  }
+
+  if (typeof window.cancelIdleCallback === "function") {
+    window.cancelIdleCallback(galleryIdleHandle);
+  } else {
+    window.clearTimeout(galleryIdleHandle);
+  }
+
+  galleryIdleHandle = null;
+};
+
+const createGalleryItem = ({ src, alt, width, height }, index) => {
+  const figure = document.createElement("figure");
+  figure.className = "gallery__item";
+
+  const img = document.createElement("img");
+  img.src = resolveGallerySrc(src);
+  img.alt = alt || `eleif community member ${index + 1}`;
+  img.loading = index === 0 ? "eager" : "lazy";
+  img.decoding = "async";
+
+  if (index === 0) {
+    img.setAttribute("fetchpriority", "high");
+  }
+
+  if (Number.isFinite(width) && Number.isFinite(height)) {
+    img.setAttribute("width", String(width));
+    img.setAttribute("height", String(height));
+    img.style.aspectRatio = `${width} / ${height}`;
+    figure.style.aspectRatio = `${width} / ${height}`;
+  }
+
+  figure.appendChild(img);
+  return figure;
+};
+
+const appendGalleryItems = (items, startIndex = 0) => {
+  if (!galleryRoot) {
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  items.forEach((entry, offset) => {
+    fragment.appendChild(createGalleryItem(entry, startIndex + offset));
+  });
+
+  galleryRoot.appendChild(fragment);
+};
+
 const renderGallery = () => {
   if (!galleryRoot) {
     return;
   }
 
-  galleryRoot.innerHTML = "";
+  cancelGalleryIdle();
+  galleryRoot.replaceChildren();
 
   if (!galleryManifest.length) {
     if (galleryEmptyState) {
@@ -636,29 +711,22 @@ const renderGallery = () => {
     .sort((a, b) => a.rank - b.rank)
     .map(({ entry }) => entry);
 
-  randomized.forEach(({ src, alt, width, height }, index) => {
-    const figure = document.createElement("figure");
-    figure.className = "gallery__item";
+  const initialCount = Math.min(6, randomized.length);
+  appendGalleryItems(randomized.slice(0, initialCount));
 
-    const img = document.createElement("img");
-    img.src = resolveGallerySrc(src);
-    img.alt = alt || `eleif community member ${index + 1}`;
-    img.loading = "lazy";
-    img.decoding = "async";
+  if (randomized.length > initialCount) {
+    const appendRemaining = () => {
+      appendGalleryItems(randomized.slice(initialCount), initialCount);
+      galleryIdleHandle = null;
+    };
 
-    if (Number.isFinite(width) && Number.isFinite(height)) {
-      img.setAttribute("width", String(width));
-      img.setAttribute("height", String(height));
-      img.style.aspectRatio = `${width} / ${height}`;
-      figure.style.aspectRatio = `${width} / ${height}`;
+    if (typeof window.requestIdleCallback === "function") {
+      galleryIdleHandle = window.requestIdleCallback(appendRemaining, { timeout: 1200 });
+    } else {
+      galleryIdleHandle = window.setTimeout(appendRemaining, 200);
     }
-
-    figure.appendChild(img);
-    galleryRoot.appendChild(figure);
-  });
+  }
 };
-
-renderGallery();
 
 const defaultTab = "gallery";
 const initialHash = normalizeTabId(window.location.hash.slice(1));
