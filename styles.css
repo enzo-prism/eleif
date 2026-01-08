@@ -9,6 +9,8 @@
   --border: rgba(40, 43, 40, 0.12);
   --accent: #6f747c;
   --accent-soft: rgba(112, 116, 123, 0.2);
+  --success: #2d8a56;
+  --success-soft: rgba(45, 138, 86, 0.12);
   --muted: #6a645a;
   --shadow: 0 18px 32px -24px rgba(36, 41, 34, 0.35);
   --radius-lg: 22px;
@@ -26,6 +28,8 @@
   --border: rgba(229, 233, 225, 0.12);
   --accent: #a7adb4;
   --accent-soft: rgba(167, 173, 180, 0.26);
+  --success: #6fd39c;
+  --success-soft: rgba(111, 211, 156, 0.16);
   --muted: #b8beb1;
   --shadow: 0 18px 36px -24px rgba(0, 0, 0, 0.6);
 }
@@ -489,7 +493,7 @@ body.dialog-open {
   padding: 0;
   background: transparent;
   color: inherit;
-  width: min(560px, calc(100vw - 32px));
+  width: min(480px, calc(100vw - 32px));
   max-width: 100%;
   margin: auto;
   z-index: 1000;
@@ -510,14 +514,14 @@ body.dialog-open {
 
 .how-it-works-dialog__content {
   display: grid;
-  gap: 18px;
-  padding: clamp(24px, 4vw, 32px);
+  gap: 16px;
+  padding: 24px;
   background: var(--surface-strong);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 32px 80px -48px rgba(12, 16, 14, 0.65);
-  width: min(460px, calc(100vw - 48px));
-  max-height: min(560px, calc(100vh - 96px));
+  border-radius: 18px;
+  box-shadow: 0 16px 40px -28px rgba(12, 16, 14, 0.45);
+  width: 100%;
+  max-height: 90vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -527,6 +531,8 @@ body.dialog-open {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
 }
 
 .how-it-works-dialog__close {
@@ -534,13 +540,13 @@ body.dialog-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.04);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
   color: var(--muted);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   line-height: 1;
   cursor: pointer;
   transition: border-color var(--transition-snappy), background var(--transition-snappy), color var(--transition-snappy);
@@ -548,9 +554,9 @@ body.dialog-open {
 
 .how-it-works-dialog__close:hover,
 .how-it-works-dialog__close:focus-visible {
-  background: rgba(112, 116, 123, 0.12);
-  border-color: rgba(112, 116, 123, 0.4);
-  color: var(--accent);
+  background: var(--surface-alt);
+  border-color: rgba(112, 116, 123, 0.32);
+  color: var(--foreground);
   outline: none;
 }
 
@@ -579,26 +585,31 @@ body.dialog-open {
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .form-steps__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   font-size: 0.95rem;
   color: var(--foreground);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .form-steps__step {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(112, 116, 123, 0.14);
-  color: var(--accent);
+  min-width: 52px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.form-steps__item + .form-steps__item {
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
 }
 
 .form__section--choices {
@@ -632,36 +643,17 @@ body.dialog-open {
   cursor: pointer;
 }
 
-.choice__label::after {
-  content: "";
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--accent);
-  opacity: 0;
-  transform: scale(0.6);
-  transition: opacity var(--transition-snappy), transform var(--transition-snappy);
-}
-
 .choice__input:focus-visible + .choice__label {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .choice__input:checked + .choice__label {
-  background: var(--surface);
-  border-color: rgba(112, 116, 123, 0.45);
-  color: var(--accent);
+  background: var(--success-soft);
+  border-color: var(--success);
+  color: var(--success);
   transform: translateY(-2px);
   box-shadow: 0 12px 20px -18px rgba(32, 37, 31, 0.45);
-}
-
-.choice__input:checked + .choice__label::after {
-  opacity: 1;
-  transform: scale(1);
 }
 
 .form-success {
@@ -1355,36 +1347,11 @@ body.dialog-open {
     width: 100%;
   }
 
-  .how-it-works-dialog[open] {
-    place-items: end center;
-    padding: 12px;
-  }
-
   .how-it-works-dialog__content {
     width: 100%;
-    border-radius: 24px 24px 16px 16px;
-    padding: 20px 20px 28px;
-    max-height: min(88vh, calc(100vh - 32px));
-    gap: 16px;
-    box-shadow: 0 -26px 60px -44px rgba(12, 16, 14, 0.6);
-  }
-
-  .how-it-works-dialog__header {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background: var(--surface-strong);
-    padding-bottom: 12px;
-  }
-
-  .how-it-works-dialog__close {
-    width: 40px;
-    height: 40px;
-    font-size: 1.25rem;
-  }
-
-  .form-steps__step {
-    margin-right: 8px;
+    padding: 20px;
+    border-radius: 16px;
+    max-height: calc(100vh - 32px);
   }
 
   .form__section {
