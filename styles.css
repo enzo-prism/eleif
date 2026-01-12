@@ -60,7 +60,6 @@ body.dialog-open {
   position: fixed;
   inset: 0;
   background: rgba(19, 22, 20, 0.68);
-  backdrop-filter: blur(6px);
   z-index: 900;
   opacity: 0;
   pointer-events: none;
@@ -220,7 +219,6 @@ body.dialog-open {
   border-radius: var(--radius-sm);
   padding: 6px;
   border: 1px solid var(--border);
-  backdrop-filter: blur(18px);
   box-shadow: var(--shadow);
   gap: 6px;
 }
@@ -281,11 +279,10 @@ body.dialog-open {
   flex-direction: column;
   gap: 28px;
   flex: 1;
-  background: var(--surface);
+  background: var(--surface-strong);
   border-radius: var(--radius-lg);
   padding: clamp(26px, 4vw, 40px);
   border: 1px solid var(--border);
-  backdrop-filter: blur(24px);
   box-shadow: var(--shadow);
   transition: opacity var(--transition-snappy), transform var(--transition-snappy);
   opacity: 0;
@@ -295,6 +292,24 @@ body.dialog-open {
 .panel--active {
   opacity: 1;
   transform: translateY(0);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .dialog-overlay {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .tabs {
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+
+  .panel {
+    background: var(--surface);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+  }
 }
 
 .panel[hidden] {
@@ -519,7 +534,13 @@ body.dialog-open {
 
 .how-it-works-dialog::backdrop {
   background: rgba(19, 22, 20, 0.68);
-  backdrop-filter: blur(6px);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .how-it-works-dialog::backdrop {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
 }
 
 .how-it-works-dialog__content {

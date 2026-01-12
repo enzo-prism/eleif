@@ -7,6 +7,26 @@ const html = readFile("index.html");
 const script = readFile("script.js");
 const css = readFile("styles.css");
 
+if (/\?\./.test(script)) {
+  throw new Error("optional chaining found in script.js (breaks older webviews)");
+}
+
+if (!script.includes("__eleif_storage_test__")) {
+  throw new Error("missing storage guard for in-app browsers");
+}
+
+if (!script.includes("addListener")) {
+  throw new Error("missing media query listener fallback for older browsers");
+}
+
+if (!css.includes("@supports ((-webkit-backdrop-filter")) {
+  throw new Error("missing backdrop-filter @supports guard");
+}
+
+if (!css.includes("-webkit-backdrop-filter")) {
+  throw new Error("missing -webkit-backdrop-filter for iOS webviews");
+}
+
 const mainMatch = html.match(/<img[^>]*data-order-main[^>]*>/i);
 if (!mainMatch) {
   throw new Error("missing order main image");

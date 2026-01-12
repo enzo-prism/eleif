@@ -39,14 +39,58 @@ const orderThumbButtons = orderMedia
   : [];
 const STORAGE_KEY = "atelier-theme";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+const storage = (() => {
+  const fallback = {
+    getItem: () => null,
+    setItem: () => {},
+    removeItem: () => {},
+  };
+
+  if (!("localStorage" in window)) {
+    return fallback;
+  }
+
+  try {
+    const testKey = "__eleif_storage_test__";
+    window.localStorage.setItem(testKey, testKey);
+    window.localStorage.removeItem(testKey);
+    return window.localStorage;
+  } catch (error) {
+    return fallback;
+  }
+})();
+
+const getMatchMedia = (query) => {
+  if (typeof window.matchMedia !== "function") {
+    return null;
+  }
+
+  return window.matchMedia(query);
+};
+
+const addMediaListener = (mediaQuery, handler) => {
+  if (!mediaQuery || typeof handler !== "function") {
+    return;
+  }
+
+  if (typeof mediaQuery.addEventListener === "function") {
+    mediaQuery.addEventListener("change", handler);
+  } else if (typeof mediaQuery.addListener === "function") {
+    mediaQuery.addListener(handler);
+  }
+};
 
 const resolveOrderThumbData = (button) => {
   const img = button.querySelector("img");
-  const width = Number(button.dataset.imageWidth || img?.getAttribute("width"));
-  const height = Number(button.dataset.imageHeight || img?.getAttribute("height"));
+  const imgWidth = img ? img.getAttribute("width") : null;
+  const imgHeight = img ? img.getAttribute("height") : null;
+  const imgSrc = img ? img.getAttribute("src") : null;
+  const imgAlt = img ? img.getAttribute("alt") : null;
+  const width = Number(button.dataset.imageWidth || imgWidth);
+  const height = Number(button.dataset.imageHeight || imgHeight);
   return {
-    src: button.dataset.imageSrc || img?.getAttribute("src"),
-    alt: button.dataset.imageAlt || img?.getAttribute("alt"),
+    src: button.dataset.imageSrc || imgSrc,
+    alt: button.dataset.imageAlt || imgAlt,
     width: Number.isFinite(width) && width > 0 ? width : null,
     height: Number.isFinite(height) && height > 0 ? height : null,
   };
@@ -88,6 +132,33 @@ const toAbsoluteUrl = (value) => {
     return new URL(value, window.location.href).toString();
   } catch (error) {
     return value;
+  }
+};
+
+const setHidden = (element, shouldHide) => {
+  if (!(element instanceof HTMLElement)) {
+    return;
+  }
+
+  if (shouldHide) {
+    element.setAttribute("hidden", "");
+  } else {
+    element.removeAttribute("hidden");
+  }
+};
+
+const clearChildren = (element) => {
+  if (!(element instanceof HTMLElement)) {
+    return;
+  }
+
+  if (typeof element.replaceChildren === "function") {
+    element.replaceChildren();
+    return;
+  }
+
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
   }
 };
 
@@ -142,15 +213,18 @@ const setupFormSubmission = ({
       });
 
       if (response.ok) {
-        const targetUrl = redirectField?.value || resolvedFallback || toAbsoluteUrl("thank-you.html");
+        const redirectValue = redirectField && redirectField.value ? redirectField.value : null;
+        const targetUrl = redirectValue || resolvedFallback || toAbsoluteUrl("thank-you.html");
         window.location.href = targetUrl;
         return;
       }
 
       const payload = await response.json().catch(() => null);
+      const payloadErrors = payload && Array.isArray(payload.errors) ? payload.errors : null;
+      const firstError = payloadErrors && payloadErrors[0] ? payloadErrors[0].message : null;
       const message =
-        payload?.errors?.[0]?.message ||
-        payload?.error ||
+        firstError ||
+        (payload && payload.error) ||
         "something went wrong while submitting. please try again.";
 
       if (errorNode) {
@@ -175,7 +249,9 @@ const setupFormSubmission = ({
   });
 };
 
+const hasDialogElement = typeof HTMLDialogElement !== "undefined";
 const canUseNativeHowItWorksDialog =
+  hasDialogElement &&
   howItWorksDialog instanceof HTMLDialogElement &&
   typeof howItWorksDialog.showModal === "function" &&
   typeof howItWorksDialog.close === "function";
@@ -402,32 +478,37 @@ if (canUseNativeHowItWorksDialog && howItWorksDialog) {
   }
 }
 
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+const prefersDark = getMatchMedia("(prefers-color-scheme: dark)");
 
 const applyTheme = (theme) => {
   const safeTheme = theme === "dark" ? "dark" : "light";
   root.setAttribute("data-theme", safeTheme);
-  localStorage.setItem(STORAGE_KEY, safeTheme);
-  themeToggle.setAttribute("aria-pressed", String(safeTheme === "dark"));
-  themeToggle.setAttribute("data-state", safeTheme === "dark" ? "dark" : "light");
+  storage.setItem(STORAGE_KEY, safeTheme);
+  if (themeToggle) {
+    themeToggle.setAttribute("aria-pressed", String(safeTheme === "dark"));
+    themeToggle.setAttribute("data-state", safeTheme === "dark" ? "dark" : "light");
+  }
 };
 
-const currentTheme =
-  localStorage.getItem(STORAGE_KEY) || (prefersDark.matches ? "dark" : "light");
+const storedTheme = storage.getItem(STORAGE_KEY);
+const prefersDarkMode = prefersDark ? prefersDark.matches : false;
+const currentTheme = storedTheme || (prefersDarkMode ? "dark" : "light");
 
 applyTheme(currentTheme);
 
-prefersDark.addEventListener("change", (event) => {
-  const stored = localStorage.getItem(STORAGE_KEY);
+addMediaListener(prefersDark, (event) => {
+  const stored = storage.getItem(STORAGE_KEY);
   if (!stored) {
     applyTheme(event.matches ? "dark" : "light");
   }
 });
 
-themeToggle.addEventListener("click", () => {
-  const nextTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  applyTheme(nextTheme);
-});
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const nextTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+  });
+}
 
 const knownTabIds = tabs.map((tab) => tab.dataset.tab);
 const TAB_TITLES = Object.freeze({
@@ -460,15 +541,19 @@ const activateTab = (targetId, { updateHash = true } = {}) => {
 
   panels.forEach((panel) => {
     const isActive = panel.dataset.panel === safeTargetId;
-    panel.classList.toggle("panel--active", isActive);
-    panel.toggleAttribute("hidden", !isActive);
+    if (isActive) {
+      panel.classList.add("panel--active");
+    } else {
+      panel.classList.remove("panel--active");
+    }
+    setHidden(panel, !isActive);
   });
 
   if (safeTargetId === "gallery") {
     renderGallery();
   }
 
-  if (document?.title) {
+  if (typeof document !== "undefined" && "title" in document) {
     document.title = TAB_TITLES[safeTargetId] || DEFAULT_TITLE;
   }
 
@@ -694,7 +779,7 @@ const renderGallery = () => {
   }
 
   cancelGalleryIdle();
-  galleryRoot.replaceChildren();
+  clearChildren(galleryRoot);
 
   if (!galleryManifest.length) {
     if (galleryEmptyState) {
@@ -813,7 +898,7 @@ if (shareButton) {
         return;
       }
 
-      if (navigator.clipboard?.writeText) {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
         await navigator.clipboard.writeText(shareUrl);
         setShareFeedback("link copied to your clipboard.");
         return;
